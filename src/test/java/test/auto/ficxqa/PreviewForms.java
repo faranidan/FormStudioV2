@@ -26,7 +26,7 @@ public class PreviewForms extends Hooks {
 		try {
 			System.out.println("Test previewfileUpload started");
 			forms.openSavedForm("AutoFileUpload");
-			forms.getPreviewForm().click();
+			forms.previewForm.click();
 			ExtentManager.pass("Opened form: AutoFileUpload & clicked Preview");
 			forms.switchTab();
 			ExtentManager.pass("Switched to preview tab");
@@ -48,7 +48,7 @@ public class PreviewForms extends Hooks {
 			ExtentManager.log("STARTING previwSum test...");
 			System.out.println("Test previewSum started");
 			forms.openSavedForm("Automation.v3");
-			forms.getPreviewForm().click();
+			forms.previewForm.click();
 			forms.switchTab();
 			forms.devTools("https://qa19.callvu.net/LAN/APIGateway/CallAPI?Name=Sum");
 			forms.previewSum(12, 12);
@@ -68,7 +68,7 @@ public class PreviewForms extends Hooks {
 			ExtentManager.log("STARTING previwDropdown test...");
 			System.out.println("Test previewDropdown started");
 			forms.openSavedForm("idanActionsDD[4autoTest]");
-			forms.getPreviewForm().click();
+			forms.previewForm.click();
 			forms.switchTab();
 			forms.dropdownFill1();
 			forms.dropdownFill2();
@@ -90,7 +90,7 @@ public class PreviewForms extends Hooks {
 			ExtentManager.log("STARTING previewRules test...");
 			System.out.println("Test previewRules Started");
 			forms.openSavedForm("AutoRulesBasicFields");
-			forms.getPreviewForm().click();
+			forms.previewForm.click();
 			forms.switchTab();
 			forms.prvwRulesStep1();
 			forms.prvwRulesStep2();
@@ -111,7 +111,7 @@ public class PreviewForms extends Hooks {
 			ExtentManager.log("STARTING previewSteps test...");
 			System.out.println("Test previewSteps Started");
 			forms.openSavedForm("AutoSteps");
-			forms.getPreviewForm().click();
+			forms.previewForm.click();
 			forms.switchTab();
 			forms.testStepName(forms.nextStepBtnPrvw, "2");
 			forms.nextStepBtnPrvw.click();

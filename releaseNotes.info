@@ -1,0 +1,7 @@
+Version: 1.01 ~~ 07.06.23, 18:30
+Whats new?? 
+* Re-Mapping elements to match new design! 
+    * + Editing the code to shorten & improve item
+    * Estimated 80% of elements re-mapped
+* Functioning tests: buildSumApi, buildBasicFields, createSteps
+    * Not Functioning: bulidFileUpload, buildRules

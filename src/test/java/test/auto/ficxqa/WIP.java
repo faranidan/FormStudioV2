@@ -23,7 +23,7 @@ public class WIP extends Hooks {
 		FormEditorObjects forms = new FormEditorObjects();
         forms.openSavedForm("AutoButtonStepTest");
         System.out.println(forms.getCurrentUrl()); 
-        forms.getPreviewForm().click();
+        forms.previewForm.click();
 		forms.changeTab(1, false);
         String url = forms.getCurrentUrl();
         System.out.println(url); 
