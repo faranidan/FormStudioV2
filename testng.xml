@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!-- <suite name="Suite" parallel="tests" thread-count="2"> -->
+<suite name="Suite" parallel="tests" thread-count="3">
+	<test name="Digital-Form preview: Buttons [form name: AutoButtonStepsTest]" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.PreviewForms">
+				<methods>
+					<include name="previewButtons"></include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="Digital-Form preview: Steps [form name: AutoSteps]" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.PreviewForms">
+				<methods>
+					<include name="previewSteps"></include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Digital-Form preview: Rules [form name: AutoRulesBasicFields]" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.PreviewForms">
+				<methods>
+					<include name="previewRules"></include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Digital-Form preview: File uploads [form name: autofileUpload]" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.PreviewForms">
+				<methods>
+					<include name="previewfileUpload"></include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Digital-Form preview: Sum API- Actions dependent fields [form name: Automation.v3: Sum action API]" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.PreviewForms">
+				<methods>
+					<include name="previewSum"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="Digital-Form preview: Dropdowns- multiple dependent fields API actions [form name: idanActionsDD[4autoTest]]" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.PreviewForms">
+				<methods>
+					<include name="previewDropdown"></include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="Create in editor: Steps test form" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="createSteps"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="Create in editor: Rules test form" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="buildRules"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="Create in editor: File upload test form" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="bulidFileUpload"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="Create in editor: Adding Fields test form [not used in other tests]" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="buildBasicFields"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="Create in editor: Sum API actions test form" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="buildSumApi"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
+
+</suite> 

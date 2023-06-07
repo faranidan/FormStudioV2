@@ -1,3 +1,7 @@
+target
+report/*.html
+test-output
+
 # Compiled class file
 *.class
 

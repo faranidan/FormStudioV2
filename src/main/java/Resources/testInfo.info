@@ -1,0 +1,12 @@
+** THIS IS AN INFO FILE FOR THE TEST BUILDING & STRATEGY **
+
+bulidFileUpload test: 
+1. regular file
+2. empty file
+3. multiple with empty, wrong file type [png]
+4. multiple with size limit [png]
+5. error msgs 
+6. next - back - done
+
+** CHANGE "THE Runtime.getRuntime().exec(...) " in FormEditorObjects methods previewUploadFiles: 
+from location on local machine to server location
