@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -48,7 +47,8 @@ public class FormEditorObjects extends BasePage {
 		fileTypes.click();
 		act.sendKeys(fileTypes1, Keys.ENTER).perform();
 		act.sendKeys(fileTypes2, Keys.ENTER).perform();
-		acceptMultiFiles.click();
+		act.scrollToElement(acceptMultiFiles).click(acceptMultiFiles).perform();
+		//acceptMultiFiles.click();
 		limitNumber.click();
 		act.sendKeys(Keys.BACK_SPACE, filesNumberLimit).perform();
 		limitErrorMsg.click();
@@ -78,7 +78,7 @@ public class FormEditorObjects extends BasePage {
 
 	public void renameFormBlocks(String titleName, String blockName) throws InterruptedException, IOException {
 		formTitle.sendKeys(titleName);
-		getBlock1Title().sendKeys(Keys.BACK_SPACE, blockName);
+		block1Title.sendKeys(Keys.BACK_SPACE, blockName);
 		//saveFormImg.click();
 	}
 
@@ -179,35 +179,35 @@ public class FormEditorObjects extends BasePage {
 
 	public void previewSum(Integer var1, Integer var2) throws InterruptedException, IOException {
 		ExtentManager.log("Starting previewSum test...");
-		getPrvwOneInpt().sendKeys(var1.toString());
-		getPrvwTwoInpt().sendKeys(var2.toString());
-		getPrvwSum1Inpt().click();
+		prvwOneInput.sendKeys(var1.toString());
+		prvwTwoInput.sendKeys(var2.toString());
+		prvwThreeInput.click();
 		ExtentManager.pass("Sent selected values: " + var1.toString() + "+" + var2.toString());
 		Thread.sleep(900);
-		if (getPrvwSum1Inpt().getAccessibleName().equals("sum1 " + (var1 + var2))) {
-			ExtentManager.pass("Success! sum1 = " + (var1 + var2));
-			System.out.println("Success! sum1 = " + (var1 + var2));
+		if (prvwThreeInput.getAccessibleName().equals("three " + (var1 + var2))) {
+			ExtentManager.pass("Success! three = " + (var1 + var2));
+			System.out.println("Success! three = " + (var1 + var2));
 		} else {
-			ExtentManager.fail("Failed! " + getPrvwSum1Inpt().getAccessibleName());
-			System.out.println("Failed! " + getPrvwSum1Inpt().getAccessibleName());
+			ExtentManager.fail("Failed! " + prvwThreeInput.getAccessibleName());
+			System.out.println("Failed! " + prvwThreeInput.getAccessibleName());
 		}
-		prvwSum2Input.click();
+		prvwFourInput.click();
 		Thread.sleep(900);
-		if (prvwSum2Input.getAccessibleName().equals("n2sums " + ((var1 + var2) * 2))) {
-			ExtentManager.pass("Success! sum2 = " + ((var1 + var2) * 2));
-			System.out.println("Success! sum2 = " + ((var1 + var2) * 2));
+		if (prvwFourInput.getAccessibleName().equals("four " + ((var1 + var2) * 2))) {
+			ExtentManager.pass("Success! four = " + ((var1 + var2) * 2));
+			System.out.println("Success! four = " + ((var1 + var2) * 2));
 		} else {
 			ExtentManager
-					.fail("Failed! sum2 != " + ((var1 + var2) * 2) + ". It is: " + prvwSum2Input.getAccessibleName());
+					.fail("Failed! four != " + ((var1 + var2) * 2) + ". It is: " + prvwFourInput.getAccessibleName());
 			System.out.println(
-					"Failed! sum2 != " + ((var1 + var2) * 2) + ". It is: " + prvwSum2Input.getAccessibleName());
+					"Failed! four != " + ((var1 + var2) * 2) + ". It is: " + prvwFourInput.getAccessibleName());
 		}
 		Thread.sleep(600);
 	}
 
 	public void previewDone() throws InterruptedException, IOException {
 		ExtentManager.log("Starting previewDone test...");
-		getPrvwDone().click();
+		prvwDone.click();
 		waitForElement(formEndImg, Duration.ofSeconds(9));
 		Assert.assertEquals(getDriver().getTitle(), "Thank You");
 		ExtentManager.pass("Got to 'Thank You' page, form ended successfully");
@@ -503,7 +503,7 @@ public class FormEditorObjects extends BasePage {
 		testRulesEnabled(chkbxPrvw);
 		phnPrvw.sendKeys("1");
 		Thread.sleep(300);
-		getPrvwNext().click();
+		prvwNext.click();
 		Thread.sleep(300);
 		testErrorMsg("Required");
 	}
@@ -514,7 +514,7 @@ public class FormEditorObjects extends BasePage {
 		nmbPrvw.sendKeys("3");
 		block1HdrPrvw.click();
 		Thread.sleep(600);
-		getPrvwNext().click();
+		prvwNext.click();
 		lt1Prvw.sendKeys("This is an example of a long text. This is an example of a long text");
 		crrPrvw.sendKeys("100");
 		timePrvw.sendKeys("12");
@@ -814,14 +814,12 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	// New Objects after redsign!
-	@FindBy(xpath = "//div[contains(text(),'Basic Fields')]")
-	public WebElement basicFields;
-	@FindBy(css = ".expand-more-icon")
-	public WebElement arrowFormName;
+	@FindBy(xpath = "//div[contains(text(),'Basic Fields')]") public WebElement basicFields;
+	@FindBy(css = ".expand-more-icon") public WebElement arrowFormName;
 	@FindBy(xpath = "//div[@class='v-input name-input fx-font-body--small-Medium v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-flat v-text-field--enclosed v-input--is-label-active v-input--is-dirty theme--light']//input[@type='text']")
 	public WebElement formName;
-	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='Save']")
-	public WebElement SaveButton;
+	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='Save']") public WebElement SaveButton;
+	
 
 	// loader!
 	@FindBy(css = ".loading-anim-btn")
@@ -939,100 +937,52 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[normalize-space()='Edit Rules']") public WebElement editRulesBtn;
 
 	// file upload preview
-	@FindBy(xpath = "(//li[@class='file-names-list'])[2]")
-	public WebElement uploadedFileName2;
+	@FindBy(xpath = "(//li[@class='file-names-list'])[2]") public WebElement uploadedFileName2;
 	@FindBy(xpath = "//div[normalize-space()='The file you are trying to upload is larger than the 0.5 MB limit']")
 	public WebElement errorAlert2;
-	@FindBy(css = ".file-names-list")
-	public WebElement uploadedFileName;
-	@FindBy(css = ".text-error-alert")
-	public WebElement errorAlert;
-	@FindBy(xpath = "//div[contains(text(),'fileUpload_1')]")
-	public WebElement prvwFileUp1;
-	@FindBy(xpath = "//div[contains(text(),'fileUpload_2')]")
-	public WebElement prvwFileUp2;
-	@FindBy(xpath = "//div[contains(text(),'fileUpload_3')]")
-	public WebElement prvwFileUp3;
-	@FindBy(xpath = "//div[contains(text(),'fileUpload_4')]")
-	public WebElement prvwFileUp4;
-	@FindBy(xpath = "//div[contains(text(),'fileUpload_5')]")
-	public WebElement prvwFileUp5;
-	@FindBy(xpath = "//div[contains(text(),'fileUpload_6')]")
-	public WebElement prvwFileUp6;
-
-	@FindBy(xpath = "//div[contains(text(),'Specific Attributes')]")
-	public WebElement specificAtt;
-	@FindBy(xpath = "//input[@aria-label='Limit Size (in MB)']")
-	public WebElement limitSize;
-	@FindBy(xpath = "//label[normalize-space()='Accept Multiple Files']")
-	public WebElement acceptMultiFiles;
-	@FindBy(xpath = "//input[@aria-label='Allowed File Types']")
-	public WebElement fileTypes;
-	@FindBy(xpath = "//input[@aria-label='Limit Number']")
-	public WebElement limitNumber;
-	@FindBy(xpath = "//input[@aria-label='Error Message (Exceeding Number Of Files)']")
-	public WebElement limitErrorMsg;
-
-	@FindBy(xpath = "//div[contains(text(),'1')]")
-	public WebElement tempUploadFile;
-	@FindBy(xpath = "//div[normalize-space()='Checkbox']")
-	public WebElement checkboxField;
-	@FindBy(xpath = "//div[normalize-space()='Radio']")
-	public WebElement radioField;
-	@FindBy(xpath = "//div[normalize-space()='File Upload']")
-	public WebElement fileUploadField;
-	@FindBy(xpath = "//div[normalize-space()='Save']")
-	public WebElement saveBtnTest;
-	@FindBy(css = "img[alt='CallVU']")
-	public WebElement formEndImg;
-	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select - BranchByCityApi')]")
-	public WebElement ms1Selected;
-	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select2')]")
-	public WebElement ms2Selected;
-	@FindBy(css = "#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title")
-	public WebElement dd2Item1;
-	@FindBy(css = "#app div:nth-of-type(4) [role='listitem']:nth-of-type(1) .v-list__tile__title")
-	public WebElement ac2Item1;
-	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(1) .v-list__tile--link")
-	public WebElement ms2Item1;
-	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown2')]")
-	public WebElement dropdown2;
-	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown - ListApi')]")
-	public WebElement dropdown1;
-	@FindBy(xpath = "//input[@aria-label='Autocomplete - ListObjApi ']")
-	public WebElement autocomplete1;
-	@FindBy(css = ".ms1 .v-select__selections")
-	public WebElement multiSelect1;
-	@FindBy(xpath = "//input[@aria-label='Autocomplete2 - ListObjApi ']")
-	public WebElement autocomplete2;
-	@FindBy(css = ".ddf .v-select__selections")
-	public WebElement fatherDropdown;
-	@FindBy(css = ".ms2 .v-select__selections")
-	public WebElement multiSelect2;
+	@FindBy(css = ".file-names-list") public WebElement uploadedFileName;
+	@FindBy(css = ".text-error-alert") public WebElement errorAlert;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_1')]") public WebElement prvwFileUp1;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_2')]") public WebElement prvwFileUp2;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_3')]") public WebElement prvwFileUp3;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_4')]") public WebElement prvwFileUp4;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_5')]") public WebElement prvwFileUp5;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_6')]") public WebElement prvwFileUp6;
+	@FindBy(xpath = "//div[normalize-space()='Specific Attributes']") public WebElement specificAtt;
+	@FindBy(xpath = "//input[@aria-label='Limit Size (in MB)']") public WebElement limitSize;
+	@FindBy(xpath = "//label[normalize-space()='Accept Multiple Files']") public WebElement acceptMultiFiles;
+	@FindBy(xpath = "//input[@aria-label='Allowed File Types']") public WebElement fileTypes;
+	@FindBy(xpath = "//input[@aria-label='Limit Number']") public WebElement limitNumber;
+	@FindBy(xpath = "//input[@aria-label='Error Message (Exceeding Number Of Files)']") public WebElement limitErrorMsg;
+	@FindBy(xpath = "//div[contains(text(),'1')]") public WebElement tempUploadFile;
+	@FindBy(xpath = "//div[normalize-space()='Checkbox']") public WebElement checkboxField;
+	@FindBy(xpath = "//div[normalize-space()='Radio']") public WebElement radioField;
+	@FindBy(xpath = "//div[normalize-space()='File Upload']") public WebElement fileUploadField;
+	@FindBy(xpath = "//div[normalize-space()='Save']") public WebElement saveBtnTest;
+	@FindBy(css = "img[alt='CallVU']") public WebElement formEndImg;
+	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select - BranchByCityApi')]") public WebElement ms1Selected;
+	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select2')]") public WebElement ms2Selected;
+	@FindBy(css = "#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title") public WebElement dd2Item1;
+	@FindBy(css = "#app div:nth-of-type(4) [role='listitem']:nth-of-type(1) .v-list__tile__title") public WebElement ac2Item1;
+	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(1) .v-list__tile--link") public WebElement ms2Item1;
+	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown2')]") public WebElement dropdown2;
+	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown - ListApi')]") public WebElement dropdown1;
+	@FindBy(xpath = "//input[@aria-label='Autocomplete - ListObjApi ']") public WebElement autocomplete1;
+	@FindBy(css = ".ms1 .v-select__selections") public WebElement multiSelect1;
+	@FindBy(xpath = "//input[@aria-label='Autocomplete2 - ListObjApi ']") public WebElement autocomplete2;
+	@FindBy(css = ".ddf .v-select__selections") public WebElement fatherDropdown;
+	@FindBy(css = ".ms2 .v-select__selections") public WebElement multiSelect2;
 	@FindBy(css = "div:nth-of-type(14) > .theme--light.v-card.v-select-list > div[role='list'] > div:nth-of-type(1)")
 	public WebElement fddItem1;
-	@FindBy(css = "#app div:nth-of-type(12) [role='listitem']:nth-of-type(2) .v-list__tile__title")
-	public WebElement dd1Item2;
-	@FindBy(css = "#app div:nth-of-type(10) [role='listitem']:nth-of-type(3) .v-list__tile__title")
-	public WebElement ac1Item3;
-
-	@FindBy(css = "#app div:nth-of-type(8) [role='listitem']:nth-of-type(4) .v-list__tile--link")
-	public WebElement ms1Item4;
-	@FindBy(css = "#app div:nth-of-type(8) [role='listitem']:nth-of-type(5) .v-list__tile--link")
-	public WebElement ms1Item5;
-	@FindBy(css = ".ddf .material-icons")
-	public WebElement fddClear;
-	@FindBy(css = ".block_lezusi58 [tabindex]")
-	public WebElement formHeader;
-
-	@FindBy(css = ".n2sums.v-tooltip.v-tooltip--bottom input[type='text']")
-	public WebElement prvwSum2Input;
-	@FindBy(css = ".form-help-action-button.v-btn--depressed.theme--dark .v-btn__content")
-	public WebElement rulesBtn;
+	@FindBy(css = "#app div:nth-of-type(12) [role='listitem']:nth-of-type(2) .v-list__tile__title") public WebElement dd1Item2;
+	@FindBy(css = "#app div:nth-of-type(10) [role='listitem']:nth-of-type(3) .v-list__tile__title") public WebElement ac1Item3;
+	@FindBy(css = "#app div:nth-of-type(8) [role='listitem']:nth-of-type(4) .v-list__tile--link") public WebElement ms1Item4;
+	@FindBy(css = "#app div:nth-of-type(8) [role='listitem']:nth-of-type(5) .v-list__tile--link") public WebElement ms1Item5;
+	@FindBy(css = ".ddf .material-icons") public WebElement fddClear;
+	@FindBy(css = ".block_lezusi58 [tabindex]") public WebElement formHeader;
+	@FindBy(css = ".form-help-action-button.v-btn--depressed.theme--dark .v-btn__content") public WebElement rulesBtn;
 	@FindBy(css = ".theme--light.v-card.v-sheet > div[role='list'] > div") public List<WebElement> formList;
 	@FindBy(css = ".main-area .align-center") public WebElement dropArea1;
-
-	By dropNewBlock = By.cssSelector(".add-field-wrapper.flex");
 
 	// Fields code redisgn
 	@FindBy(xpath = "(//div[@class='element'])[1]") public WebElement buttonFld;
@@ -1092,84 +1042,27 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "(//div[@class='v-btn__content'][normalize-space()='Cancel'])[1]") public WebElement actionCancelBtn;
 	@FindBy(xpath = "//div[normalize-space()='New Action']") public WebElement newActionBtn;
 
-	By block1Title = By.cssSelector(".primary--text .editable");
-	By readOnlyAtt = By.cssSelector("div:nth-of-type(11) > .v-input__control > .v-input__slot > .theme--light.v-label");
-	By requiredAtt = By.cssSelector("div:nth-of-type(12) > .v-input__control > .v-input__slot > .theme--light.v-label");
-	By hiddenAtt = By.cssSelector("div:nth-of-type(13) > .v-input__control > .v-input__slot > .theme--light.v-label");
-	// nth-of-type(xx) is a dynamic field
-
-	By actnDrpdwnItm2 = By
-			.cssSelector("#app div:nth-of-type(21) [role='listitem']:nth-of-type(2) .v-list__tile__title");
-	By prvwSingleInput = By.cssSelector("input[required]");
-	By prvwNext = By.cssSelector(".v-btn--block .v-btn__content");
-	By prvwDone = By.cssSelector(".done-btn .material-icons");
-	By prvwBlock1Hdr = By.cssSelector("h2");
-	By prvwReadOnly = By.cssSelector("[readonly='readonly']");
-
-	By prvwOneInpt = By.cssSelector("[aria-label='one ']");
-	By prvwTwoInpt = By.cssSelector("[aria-label='two ']");
-	By prvwSum1Inpt = By.cssSelector(".sum1.v-tooltip.v-tooltip--bottom input[type='text']");
-	By prvwN2SumInpt = By.cssSelector(".n2sums.v-tooltip.v-tooltip--bottom input[type='text']");
-
-	public WebElement getPrvwOneInpt() throws InterruptedException, IOException {
-		return getDriver().findElement(prvwOneInpt);
-	}
-
-	public WebElement getPrvwTwoInpt() throws InterruptedException, IOException {
-		return getDriver().findElement(prvwTwoInpt);
-	}
-
-	public WebElement getPrvwSum1Inpt() throws InterruptedException, IOException {
-		return getDriver().findElement(prvwSum1Inpt);
-	}
-
-	public WebElement getPrvwN2SumInpt() throws InterruptedException, IOException {
-		return getDriver().findElement(prvwN2SumInpt);
-	}
-
-	public WebElement getActionDrpdwnItm2() throws InterruptedException, IOException {
-		return getDriver().findElement(actnDrpdwnItm2);
-	}
-
-	public WebElement getPrvwReadOnly() throws InterruptedException, IOException {
-		return getDriver().findElement(prvwReadOnly);
-	}
-
-	public WebElement getPrvwBlock1Hdr() throws InterruptedException, IOException {
-		return getDriver().findElement(prvwBlock1Hdr);
-	}
-
-	public WebElement getPrvwDone() throws InterruptedException, IOException {
-		return getDriver().findElement(prvwDone);
-	}
-
-	public WebElement getPrvwNext() throws InterruptedException, IOException {
-		return getDriver().findElement(prvwNext);
-	}
-
-	public WebElement getPrvwSingleInput() throws InterruptedException, IOException {
-		return getDriver().findElement(prvwSingleInput);
-	}
-
-	public WebElement getHiddenAtt() throws InterruptedException, IOException {
-		return getDriver().findElement(hiddenAtt);
-	}
-
-	public WebElement getrequiredAtt() throws InterruptedException, IOException {
-		return getDriver().findElement(requiredAtt);
-	}
-
-	public WebElement getReadOnlyAtt() throws InterruptedException, IOException {
-		return getDriver().findElement(readOnlyAtt);
-	}
-
-	public WebElement getBlock1Title() throws InterruptedException, IOException {
-		return getDriver().findElement(block1Title);
-	}
-
-	public WebElement getDropNewBlock() throws InterruptedException, IOException {
-		return getDriver().findElement(dropNewBlock);
-	}
+	// preview sum api
+	@FindBy(css = "[aria-label='one ']") public WebElement prvwOneInput;
+	@FindBy(css = "[aria-label='two ']") public WebElement prvwTwoInput;
+	@FindBy(css = "[aria-label='three ']") public WebElement prvwThreeInput;
+	@FindBy(css = "[aria-label='four ']") public WebElement prvwFourInput;
+	
+	@FindBy(css = "#app div:nth-of-type(21) [role='listitem']:nth-of-type(2) .v-list__tile__title") 
+	public WebElement actnDrpdwnItm2;
+	@FindBy(css = "h2") public WebElement prvwBlock1Hdr;
+	@FindBy(css = "[readonly='readonly']") public WebElement prvwReadOnly;
+	@FindBy(css = ".done-btn .material-icons") public WebElement prvwDone;
+	@FindBy(css = ".v-btn--block .v-btn__content") public WebElement prvwNext;
+	@FindBy(css = "input[required]") public WebElement prvwSingleInput;
+	@FindBy(css = "div:nth-of-type(13) > .v-input__control > .v-input__slot > .theme--light.v-label") 
+	public WebElement hiddenAtt;
+	@FindBy(css = "div:nth-of-type(12) > .v-input__control > .v-input__slot > .theme--light.v-label") 
+	public WebElement requiredAtt;
+	@FindBy(css = "div:nth-of-type(11) > .v-input__control > .v-input__slot > .theme--light.v-label") 
+	public WebElement readOnlyAtt;
+	@FindBy(css = ".primary--text .editable") public WebElement block1Title;
+	@FindBy(css = ".add-field-wrapper.flex") public WebElement dropNewBlock;
 
 	public String jsDragnDrop() {
 		return "function createEvent(typeOfEvent) {\n" + "var event =document.createEvent(\"CustomEvent\");\n"
