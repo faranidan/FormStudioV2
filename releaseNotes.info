@@ -1,3 +1,16 @@
+Version: 1.10 ~~ 18.06.23, 14:30
+Whats new?? 
+* Fixed buildSumApi Test: 
+    * Api Integration tab fixes: 
+        * Access apiName, ruleCodeArea, Save & Cancel buttons [forms.createSumApi]
+* Fixed previewSum Test: Added inputs name after changed [three 24, four 48]
+* Fixed previewDropdown Test: 
+    * Found error in code- did not check field clearing properly. Added If statement 
+    * Fixed webelements for emplty fields [contains(aria-label),'text']
+* Fixed previewButtons Test: 
+    * Buttons verification * removed 
+
+
 Version: 1.03 ~~ 11.06.23, 18:30
 Whats new?? 
 * All build tests are now functional ! 

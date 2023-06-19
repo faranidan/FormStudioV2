@@ -127,10 +127,10 @@ public class FormEditorObjects extends BasePage {
 			throws InterruptedException, IOException {
 		selectAPI.click();
 		act.scrollToElement(sumAPI).click(sumAPI).perform();
-		act.click(actionName).sendKeys(name).perform();
-		act.click(actionCode).sendKeys(code).perform();
+		actionName.sendKeys(name);
+		act.moveToElement(actionCode).click(actionCode).sendKeys(code).perform();
 		act.click(actionInputFld1).sendKeys(input1).sendKeys(Keys.ENTER).perform();
-		act.click(actionInputFld1).sendKeys(input2).sendKeys(Keys.ENTER).perform();
+		act.click(actionInputFld2).sendKeys(input2).sendKeys(Keys.ENTER).perform();
 		act.scrollToElement(actionSumFld).click(actionSumFld).sendKeys(sum, Keys.ENTER).perform();
 		act.scrollToElement(actionSaveBtn).click(actionSaveBtn).perform();
 		ExtentManager.pass("Created actions succesfully: " + name);
@@ -163,8 +163,6 @@ public class FormEditorObjects extends BasePage {
 
 	public void changeTab(Integer tabNmbr, Boolean close) throws InterruptedException, IOException {
 		Thread.sleep(1200);
-		// loaderGone();
-		// waitForInvisibility(loaderPrvw, Duration.ofSeconds(3));
 		ArrayList<String> tabsList = new ArrayList<>(getDriver().getWindowHandles()); // tabsList is static
 		if (close == true) {
 			getDriver().switchTo().window(tabsList.get(tabNmbr)); // 2nd tab
@@ -182,23 +180,23 @@ public class FormEditorObjects extends BasePage {
 		prvwThreeInput.click();
 		ExtentManager.pass("Sent selected values: " + var1.toString() + "+" + var2.toString());
 		Thread.sleep(900);
-		if (prvwThreeInput.getAccessibleName().equals("three " + (var1 + var2))) {
+		if (prvwThreeInputAfter.getAccessibleName().equals("three " + (var1 + var2))) {
 			ExtentManager.pass("Success! three = " + (var1 + var2));
 			System.out.println("Success! three = " + (var1 + var2));
 		} else {
-			ExtentManager.fail("Failed! " + prvwThreeInput.getAccessibleName());
-			System.out.println("Failed! " + prvwThreeInput.getAccessibleName());
+			ExtentManager.fail("Failed! three input unrecognizable");
+			System.out.println("Failed! three input unrecognizable");
+			Assert.fail();
 		}
 		prvwFourInput.click();
 		Thread.sleep(900);
-		if (prvwFourInput.getAccessibleName().equals("four " + ((var1 + var2) * 2))) {
+		if (prvwFourInputAfter.getAccessibleName().equals("four " + ((var1 + var2) * 2))) {
 			ExtentManager.pass("Success! four = " + ((var1 + var2) * 2));
 			System.out.println("Success! four = " + ((var1 + var2) * 2));
 		} else {
-			ExtentManager
-					.fail("Failed! four != " + ((var1 + var2) * 2) + ". It is: " + prvwFourInput.getAccessibleName());
-			System.out.println(
-					"Failed! four != " + ((var1 + var2) * 2) + ". It is: " + prvwFourInput.getAccessibleName());
+			ExtentManager.fail("Failed! four input unrecognizable");
+			System.out.println("Failed! four input unrecognizable");
+			Assert.fail();
 		}
 		Thread.sleep(600);
 	}
@@ -299,8 +297,15 @@ public class FormEditorObjects extends BasePage {
 		testDropdownClearing(dd2Item1);
 		formHeader.click();
 		autocomplete2.click();
-		Thread.sleep(300);
-		testDropdownClearing(ac2Item1);
+		testDropdownClearing(ac2Item1);	
+		/* 
+		try {
+			autocomplete2.click();
+			testDropdownClearing(ac2Item1);	
+		} catch (NoSuchElementException e){
+			ExtentManager.fail("Autocomplete2 did not clear");
+		}
+		*/
 		formHeader.click();
 		multiSelect2.click();
 		Thread.sleep(300);
@@ -326,10 +331,14 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void testEmptyDDownInput(WebElement item, String emptyMsg) {
-		if (item.getAttribute("placeholder").contains(emptyMsg)) {
-			ExtentManager.pass(item.getAttribute("aria-label") + "- field cleared");
-		} else {
-			ExtentManager.fail(item.getAttribute("aria-label") + "- field DID NOT clear.");
+		try {
+			if (item.getAttribute("placeholder").contains(emptyMsg)){
+				ExtentManager.pass(item.getAttribute("aria-label") + " PASS - field cleared");
+			} else {
+				ExtentManager.fail(item.getAttribute("aria-label")+" FAILED - field NOT cleared");
+			}
+		} catch(NoSuchElementException e) {
+			ExtentManager.fail("  FAILED - Field NOT cleared");
 		}
 	}
 
@@ -835,16 +844,16 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[contains(text(),'hidden')]") public WebElement btn13PrvwBtns;
 	@FindBy(css = "input[aria-label='activate rule ']") public WebElement activateRuleBtnPrvw;
 	@FindBy(xpath = "//label[normalize-space()='Checkbox*']") public WebElement CheckboxBtnsPrvw;
-	@FindBy(xpath = "//div[contains(text(),'4th Step*')]") public WebElement btn12PrvwBtns;
+	@FindBy(xpath = "//div[contains(text(),'4th Step')]") public WebElement btn12PrvwBtns;
 	@FindBy(xpath = "//div[contains(text(),'Finish url sameTab')]") public WebElement btn11PrvwBtns;
-	@FindBy(xpath = "//div[contains(text(),'url Req sameTab*')]") public WebElement btn10PrvwBtns;
+	@FindBy(xpath = "//div[contains(text(),'url Req sameTab')]") public WebElement btn10PrvwBtns;
 	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='url sameTab']") public WebElement btn9PrvwBtns;
 	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='2nd Step']") public WebElement secondStepBtn;
 	@FindBy(xpath = "//textarea[@aria-label='Long Text ']") public WebElement lt1PrvwBtns;
 	@FindBy(xpath = "//div[contains(text(),'Finish url newTab notReq')]") public WebElement btn8PrvwBtns;
-	@FindBy(xpath = "//div[contains(text(),'Finish url newTab req*')]") public WebElement btn7PrvwBtns;
+	@FindBy(xpath = "//div[contains(text(),'Finish url newTab req')]") public WebElement btn7PrvwBtns;
 	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='url newTab notReq']") public WebElement btn6PrvwBtns;
-	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='url newTab req*']") public WebElement btn5PrvwBtns;
+	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='url newTab req']") public WebElement btn5PrvwBtns;
 	@FindBy(css = "h2[aria-label='url newTab options']") public WebElement buttonsStep2Hdr;
 	@FindBy(xpath = "//h2[normalize-space()='req + step']") public WebElement buttonsStep1Hdr;
 	@FindBy(xpath = "//div[contains(text(),'req+step[2]')]") public WebElement btn1PrvwBtns;
@@ -967,9 +976,9 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(1) .v-list__tile--link") public WebElement ms2Item1;
 	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown2')]") public WebElement dropdown2;
 	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown - ListApi')]") public WebElement dropdown1;
-	@FindBy(xpath = "//input[@aria-label='Autocomplete - ListObjApi ']") public WebElement autocomplete1;
+	@FindBy(xpath = "//input[contains(@aria-label,'Autocomplete - ListObjApi')]") public WebElement autocomplete1;
 	@FindBy(css = ".ms1 .v-select__selections") public WebElement multiSelect1;
-	@FindBy(xpath = "//input[@aria-label='Autocomplete2 - ListObjApi ']") public WebElement autocomplete2;
+	@FindBy(xpath = "//input[contains(@aria-label,'Autocomplete2 - ListObjApi')]") public WebElement autocomplete2;
 	@FindBy(css = ".ddf .v-select__selections") public WebElement fatherDropdown;
 	@FindBy(css = ".ms2 .v-select__selections") public WebElement multiSelect2;
 	@FindBy(css = "div:nth-of-type(14) > .theme--light.v-card.v-select-list > div[role='list'] > div:nth-of-type(1)")
@@ -1034,21 +1043,25 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[@class='v-list__tile__title'][normalize-space()='Sum']") public WebElement sumAPI;
 	@FindBy(xpath = "//div[@class='v-list__tile__title'][normalize-space()='List']") public WebElement listAPI;
 	@FindBy(xpath = "(//input[@type='text'])[2]") public WebElement actionName;
-	@FindBy(css = ".CodeMirror-scroll") public WebElement actionCode;
+	@FindBy(css = "div[class='CodeMirror-code']") public WebElement actionCode;
 	@FindBy(xpath = "(//input[@aria-label='Select Field'])[1]") public WebElement actionInputFld1;
 	@FindBy(xpath = "(//input[@aria-label='Select Field'])[2]") public WebElement actionInputFld2;
 	@FindBy(xpath = "(//input[@aria-label='Select Field'])[11]") public WebElement actionSumFld;
-	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='Save']") 
+	@FindBy(xpath = "(//div[@class='v-btn__content'][normalize-space()='Save'])[1]") 
 	public WebElement actionSaveBtn;
-	@FindBy(xpath = "(//div[@class='v-btn__content'][normalize-space()='Cancel'])[2]") 
+	@FindBy(xpath = "(//div[@class='v-btn__content'][normalize-space()='Cancel'])[1]") 
 	public WebElement actionCancelBtn;
+	@FindBy(xpath = "(//div[@class='v-btn__content'][normalize-space()='Cancel'])[2]") 
+	public WebElement actionCancelBtnRules;
 	@FindBy(xpath = "//div[normalize-space()='New Action']") public WebElement newActionBtn;
 
 	// preview sum api
 	@FindBy(css = "[aria-label='one ']") public WebElement prvwOneInput;
 	@FindBy(css = "[aria-label='two ']") public WebElement prvwTwoInput;
 	@FindBy(css = "[aria-label='three ']") public WebElement prvwThreeInput;
+	@FindBy(css = "input[aria-label='three 24']") public WebElement prvwThreeInputAfter;	
 	@FindBy(css = "[aria-label='four ']") public WebElement prvwFourInput;
+	@FindBy(css = "input[aria-label='four 48']") public WebElement prvwFourInputAfter;
 	
 	@FindBy(css = "#app div:nth-of-type(21) [role='listitem']:nth-of-type(2) .v-list__tile__title") 
 	public WebElement actnDrpdwnItm2;

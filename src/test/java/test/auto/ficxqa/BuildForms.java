@@ -53,7 +53,7 @@ public class BuildForms extends Hooks {
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test bulidFileUpload failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: ", e.getCause());
+            Assert.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test bulidFileUpload end.");
         }
@@ -64,7 +64,7 @@ public class BuildForms extends Hooks {
         FormEditorObjects forms = new FormEditorObjects();
         ExtentManager.log("Staring buildSumApi test...");
         System.out.println("Test buildSumApi started");
-        try{
+        try{         
             forms.renameFormTitle("Auto SumAPI");
             forms.renameFormBlocks("Page1", "Block1");
             forms.addField(forms.shortTextFld, "four");
@@ -74,14 +74,14 @@ public class BuildForms extends Hooks {
             forms.createAction();
             forms.createSumApi("SUM-1", "one && two", "one", "two", "three");
             forms.newSumActionISA();
-            forms.createSumApi("SUM-2", "sum1", "three", "three", "four");
+            forms.createSumApi("SUM-2", "three", "three", "three", "four");
             forms.actionCancelBtn.click();
             forms.saveForm();
             System.out.println("Test buildSumApi finished execution successfully.");
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test buildBasicFields failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: ", e.getCause());
+            Assert.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test buildSumApi end.");
         }
@@ -115,7 +115,7 @@ public class BuildForms extends Hooks {
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test buildBasicFields failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: ", e.getCause());
+            Assert.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test buildBasicFields end.");
         }
@@ -144,13 +144,13 @@ public class BuildForms extends Hooks {
             forms.addRuleByBlock(forms.Block2, forms.fieldStatusHidden);
             forms.addNewRule("on", "phn");
             forms.addRuleByBlock(forms.Block2, forms.fieldStatusVisible);
-            forms.actionCancelBtn.click();
+            forms.actionCancelBtnRules.click();
             forms.saveForm();
             System.out.println("Test buildRules ended successfully.");    
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test buildRules failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: ", e.getCause());
+            Assert.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test buildRules ended.");
         }
@@ -173,7 +173,7 @@ public class BuildForms extends Hooks {
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test createSteps failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: ", e.getCause());
+            Assert.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test createSteps ended.");
         }
