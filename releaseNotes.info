@@ -1,4 +1,9 @@
-Version: 1.13 ~~ 21.06.23, 18:00
+Version: 1.14 ~~ 21.06.23, 18:30
+Whats new??
+    *Fix attempt to Jenkins job bug: 
+        previewRules -> prvwRulesStep2 -> nmbPrvw
+
+Version: 1.13 ~~ 20.06.23, 18:00
 Whats new?? 
 * Fixed dropdown preview test dropdownSelectedFieldClear: 
     * ms2 field is clearing but has placeholder: (Please Select) - false test pass
