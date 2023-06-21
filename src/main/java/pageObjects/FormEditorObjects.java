@@ -507,13 +507,12 @@ public class FormEditorObjects extends BasePage {
 		phnPrvw.sendKeys("1");
 		Thread.sleep(300);
 		prvwNext.click();
-		Thread.sleep(300);
 		testErrorMsg("Required");
 	}
 
 	public void prvwRulesStep2() throws InterruptedException, IOException {
 		ExtentManager.log("Starting prvwRulesStep2 method...");
-		Thread.sleep(600);
+		waitForElement(nmbPrvw, Duration.ofSeconds(3));
 		nmbPrvw.sendKeys("3");
 		block1HdrPrvw.click();
 		Thread.sleep(600);
