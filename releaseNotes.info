@@ -1,4 +1,12 @@
-Version: 1.10 ~~ 18.06.23, 14:30
+Version: 1.13 ~~ 21.06.23, 18:00
+Whats new?? 
+* Fixed dropdown preview test dropdownSelectedFieldClear: 
+    * ms2 field is clearing but has placeholder: (Please Select) - false test pass
+        * error do to 1st selection of MS that appears with placeholder although empty
+* fixed button name test - testRequiredBtnRule method:
+    * Changed test to click the button and check verification, instead of [required*]
+
+Version: 1.10 ~~ 18.06.23, 18:00
 Whats new?? 
 * Fixed buildSumApi Test: 
     * Api Integration tab fixes: 

@@ -241,7 +241,7 @@ public class FormEditorObjects extends BasePage {
 		autocomplete1.click();
 		waitForElement(ac1Item3, Duration.ofSeconds(3));
 		ac1Item3.click();
-		multiSelect1.click();
+		act.moveToElement(multiSelect1).click().perform();
 		ms1Item4.click();
 		ms1Item5.click();
 		ExtentManager.pass("Selected fields for fatherDropdown, dropdown1 & autocomplete1 successfully");
@@ -256,8 +256,8 @@ public class FormEditorObjects extends BasePage {
 		autocomplete2.click();
 		Thread.sleep(600);
 		ac2Item1.click();
-		multiSelect2.click();
-		ms2Item1.click();
+		act.moveToElement(multiSelect2).click().perform();
+		ms2Item3.click();
 		ExtentManager.pass("Selected fields for dropdown2, autocomplete2 & multiSelect2 successfully");
 	}
 
@@ -284,7 +284,7 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(300);
 		testDropdownClearing(dd1Item2);
 		formHeader.click();
-		multiSelect1.click();
+		act.moveToElement(multiSelect1).click().perform();
 		Thread.sleep(300);
 		testDropdownClearing(ms1Item4);
 	}
@@ -298,18 +298,10 @@ public class FormEditorObjects extends BasePage {
 		formHeader.click();
 		autocomplete2.click();
 		testDropdownClearing(ac2Item1);	
-		/* 
-		try {
-			autocomplete2.click();
-			testDropdownClearing(ac2Item1);	
-		} catch (NoSuchElementException e){
-			ExtentManager.fail("Autocomplete2 did not clear");
-		}
-		*/
 		formHeader.click();
-		multiSelect2.click();
+		act.moveToElement(multiSelect2).click().perform();
 		Thread.sleep(300);
-		testDropdownClearing(ms2Item1);
+		testDropdownClearing(ms2Item3);
 	}
 
 	public void testDropdownClearing(WebElement item) {
@@ -334,8 +326,10 @@ public class FormEditorObjects extends BasePage {
 		try {
 			if (item.getAttribute("placeholder").contains(emptyMsg)){
 				ExtentManager.pass(item.getAttribute("aria-label") + " PASS - field cleared");
+				System.out.println(item.getAttribute("aria-label")+" placeholder: "+item.getAttribute("placeholder"));
 			} else {
 				ExtentManager.fail(item.getAttribute("aria-label")+" FAILED - field NOT cleared");
+				System.out.println(item.getAttribute("aria-label")+" placeholder: "+item.getAttribute("placeholder"));
 			}
 		} catch(NoSuchElementException e) {
 			ExtentManager.fail("  FAILED - Field NOT cleared");
@@ -745,16 +739,26 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.log("Ended method testBtns5 successfully.");
 	}
 
-	public void testRequiredBtnRule(WebElement button, boolean shouldBeReq) {
-		if (shouldBeReq == true) {
-			if (button.getText().equals("required*")) {
-				ExtentManager.pass("Passed: Required rule turned on for button");
-			} else {
-				ExtentManager.fail("Failed: button name: " + button.getText());
+	public void testRequiredBtnRule(WebElement button, boolean shouldBeReq) throws InterruptedException {
+		if (shouldBeReq == false) {
+			try{
+				button.click();
+				Thread.sleep(300);
+				btn12PrvwBtns.click();
+				Thread.sleep(600);
+				if (errorMsgPrvw.isDisplayed()){
+					CheckboxBtnsPrvw.click();
+					btn12PrvwBtns.click();
+				}
+				ExtentManager.pass("Passed: Required rule OFF on for button 'required'");
+			}catch(NoSuchElementException e){
+				ExtentManager.fail("Failed: Did not integrate with step 3 elements");
 			}
 		} else {
-			if (button.getText().equals("required")) {
-				ExtentManager.pass("Passed: Required rule not turned on for button");
+			button.click();
+			Thread.sleep(600);
+			if (errorMsgPrvw.isDisplayed()){
+				ExtentManager.pass("Passed: Required rule ON for button");
 			} else {
 				ExtentManager.fail("Failed: button name: " + button.getText());
 			}
@@ -844,7 +848,7 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[contains(text(),'hidden')]") public WebElement btn13PrvwBtns;
 	@FindBy(css = "input[aria-label='activate rule ']") public WebElement activateRuleBtnPrvw;
 	@FindBy(xpath = "//label[normalize-space()='Checkbox*']") public WebElement CheckboxBtnsPrvw;
-	@FindBy(xpath = "//div[contains(text(),'4th Step')]") public WebElement btn12PrvwBtns;
+	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='4th Step']") public WebElement btn12PrvwBtns;
 	@FindBy(xpath = "//div[contains(text(),'Finish url sameTab')]") public WebElement btn11PrvwBtns;
 	@FindBy(xpath = "//div[contains(text(),'url Req sameTab')]") public WebElement btn10PrvwBtns;
 	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='url sameTab']") public WebElement btn9PrvwBtns;
@@ -973,14 +977,14 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select2')]") public WebElement ms2Selected;
 	@FindBy(css = "#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title") public WebElement dd2Item1;
 	@FindBy(css = "#app div:nth-of-type(4) [role='listitem']:nth-of-type(1) .v-list__tile__title") public WebElement ac2Item1;
-	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(1) .v-list__tile--link") public WebElement ms2Item1;
+	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(3) .v-list__tile--link") public WebElement ms2Item3;
 	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown2')]") public WebElement dropdown2;
 	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown - ListApi')]") public WebElement dropdown1;
 	@FindBy(xpath = "//input[contains(@aria-label,'Autocomplete - ListObjApi')]") public WebElement autocomplete1;
-	@FindBy(css = ".ms1 .v-select__selections") public WebElement multiSelect1;
+	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select -')]") public WebElement multiSelect1;
 	@FindBy(xpath = "//input[contains(@aria-label,'Autocomplete2 - ListObjApi')]") public WebElement autocomplete2;
 	@FindBy(css = ".ddf .v-select__selections") public WebElement fatherDropdown;
-	@FindBy(css = ".ms2 .v-select__selections") public WebElement multiSelect2;
+	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select2')]") public WebElement multiSelect2;
 	@FindBy(css = "div:nth-of-type(14) > .theme--light.v-card.v-select-list > div[role='list'] > div:nth-of-type(1)")
 	public WebElement fddItem1;
 	@FindBy(css = "#app div:nth-of-type(12) [role='listitem']:nth-of-type(2) .v-list__tile__title") public WebElement dd1Item2;
