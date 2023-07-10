@@ -1,8 +1,11 @@
+Version: 1.2 ~~ 10.07.23, 18:30
+Whats new??
+    * Changed EndFormImg to endFormFicx [Thank you page update]
+
 Version: 1.15 ~~ 22.06.23, 10:00
 Whats new??
     * Appears that last bug was fixed, or was related to Jenkins / Test lags
 
-    
 Version: 1.14 ~~ 21.06.23, 18:30
 Whats new??
     *Fix attempt to Jenkins job bug: 
