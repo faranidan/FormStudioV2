@@ -204,7 +204,7 @@ public class FormEditorObjects extends BasePage {
 	public void previewDone() throws InterruptedException, IOException {
 		ExtentManager.log("Starting previewDone test...");
 		prvwDone.click();
-		waitForElement(formEndImg, Duration.ofSeconds(9));
+		waitForElement(formEndFicx, Duration.ofSeconds(9));
 		Assert.assertEquals(getDriver().getTitle(), "Thank You");
 		ExtentManager.pass("Got to 'Thank You' page, form ended successfully");
 	}
@@ -766,7 +766,7 @@ public class FormEditorObjects extends BasePage {
 
 	public void testFormSubmitted() throws InterruptedException, IOException {
 		try {
-			waitForClick(formEndImg, Duration.ofSeconds(6));
+			waitForClick(formEndFicx, Duration.ofSeconds(6));
 			ExtentManager.pass("Passed. Form submitted successfully.");
 		} catch (NoSuchElementException | TimeoutException e) {
 			ExtentManager.fail("Failed: Did not get to Form submitted. Url: " + getDriver().getCurrentUrl());
@@ -971,7 +971,7 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[normalize-space()='Radio']") public WebElement radioField;
 	@FindBy(xpath = "//div[normalize-space()='File Upload']") public WebElement fileUploadField;
 	@FindBy(xpath = "//div[normalize-space()='Save']") public WebElement saveBtnTest;
-	@FindBy(css = "img[alt='CallVU']") public WebElement formEndImg;
+	@FindBy(xpath = "//h1[normalize-space()='FICX']") public WebElement formEndFicx;
 	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select - BranchByCityApi')]") public WebElement ms1Selected;
 	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select2')]") public WebElement ms2Selected;
 	@FindBy(css = "#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title") public WebElement dd2Item1;
