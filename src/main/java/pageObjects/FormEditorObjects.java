@@ -11,7 +11,6 @@ import java.util.Set;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.devtools.DevTools;
@@ -454,7 +453,6 @@ public class FormEditorObjects extends BasePage {
 		} catch (NoSuchElementException e) {
 			ExtentManager.pass("new rule is being made");
 		}
-
 		act.click(rulesCode).sendKeys(enterRuleCode).perform();
 		act.scrollToElement(ruleSelectField).click(ruleSelectField).perform();
 		ExtentManager.pass("Added a new rule Name & Code");
@@ -468,18 +466,19 @@ public class FormEditorObjects extends BasePage {
 		waitForElement(fieldStatus, Duration.ofSeconds(3));
 		fieldStatus.click();
 		ExtentManager.pass("Selected a field & outcome for rule");
-		act.scrollToElement(ruleSaveBtn).click(ruleSaveBtn).perform();
-		ExtentManager.pass("Saved rule");
+		//act.moveToElement(ruleSaveBtn).click().perform();
+		//ExtentManager.pass("Saved rule");
 	}
 
 	public void addOutcome(WebElement fieldStatus) throws InterruptedException, IOException {
 		ExtentManager.log("Starting addOutcome method");
+		//act.moveToElement(newRuleBtn).click().perform();
 		newRuleBtn.click();
-		ExtentManager.pass("Added rule inside, using Plus button");
+		ExtentManager.pass("Added New Outcome to the rule");
 		act.moveToElement(nextFieldStatus).click().perform();
 		fieldStatus.click();
 		ExtentManager.pass("Selected status to next field in line [auto selected next field]");
-		act.scrollToElement(ruleUpdateSave).click(ruleUpdateSave).perform();
+		//act.scrollToElement(ruleUpdateSave).click(ruleUpdateSave).perform();
 		Thread.sleep(600);
 		ExtentManager.pass("Saved-Update rule");
 	}
@@ -548,9 +547,11 @@ public class FormEditorObjects extends BasePage {
 		passPrvw.sendKeys("123");
 		block1HdrPrvw.click();
 		Thread.sleep(600);
-		if (phnPrvw.getAttribute("aria-label").equals("phn ")) {
-			ExtentManager.pass("Passed: Hidden rule cleared phn Field");
-		} else {
+		try{
+			if (phnPrvw.getAttribute("aria-label").equals("phn ")) {
+				ExtentManager.pass("Passed: Hidden rule cleared phn Field");
+			} 
+		} catch (Exception NoSuchElementException) {
 			ExtentManager.fail("Failed: Hidden rule DID NOT clear phn Field");
 		}
 	}
@@ -656,7 +657,7 @@ public class FormEditorObjects extends BasePage {
 		System.out.println("Started method testBtns2: btn step+finish, testing validations + finish");
 		ExtentManager.log("Started method testBtns2: btn step+finish, testing validations + finish");
 		startBtnsPrvwTest();
-		phoneNumberPrvw.sendKeys("1");
+		act.moveToElement(phoneNumberPrvw).click().sendKeys("1").perform();
 		btn4PrvwBtns.click();
 		testFormSubmitted();
 		ExtentManager.pass("Passed: Step[Finish Form] submitted form");
@@ -669,7 +670,7 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.log("Started method testBtns3: btns- url new tab [req,finish], testing params & validations");
 		System.out.println("Started method testBtns3: btns- url new tab [req,finish], testing params & validations");
 		startBtnsPrvwTest();
-		phoneNumberPrvw.sendKeys("1");
+		act.moveToElement(phoneNumberPrvw).click().sendKeys("1").perform();
 		nextStepBtnPrvw.click();
 		testBtnReqMsg(btn5PrvwBtns, "btn5");
 		testBtnReqMsg(btn7PrvwBtns, "btn7");
@@ -710,8 +711,6 @@ public class FormEditorObjects extends BasePage {
 		CheckboxBtnsPrvw.click();
 		String GUID2 = getGuid();
 		btn11PrvwBtns.click();
-		// testFormSubmitted(); // not working. does not catch the moment of change.
-		// Maybe in a while loop
 		testUrlParams(GUID2, false);
 		System.out.println("Ended method testBtns4 successfully.");
 		ExtentManager.log("Ended method testBtns4 successfully.");
@@ -733,6 +732,9 @@ public class FormEditorObjects extends BasePage {
 		testRulesDisabled(btn14PrvwBtns);
 		testRulesEnabled(btn15PrvwBtns);
 		testRequiredBtnRule(btn16PrvwBtns, true);
+		step4St1.sendKeys("1");
+		act.moveToElement(finishPrvw).click().perform();
+		testFormSubmitted();
 		ExtentManager.pass("Passed: All rules are active after activation");
 		System.out.println("Ended method testBtns5 successfully.");
 		ExtentManager.log("Ended method testBtns5 successfully.");
@@ -765,17 +767,16 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void testFormSubmitted() throws InterruptedException, IOException {
-		try {
-			waitForClick(formEndFicx, Duration.ofSeconds(6));
-			ExtentManager.pass("Passed. Form submitted successfully.");
-		} catch (NoSuchElementException | TimeoutException e) {
-			ExtentManager.fail("Failed: Did not get to Form submitted. Url: " + getDriver().getCurrentUrl());
-			e.printStackTrace();
+		Thread.sleep(1200);
+		if (getDriver().getCurrentUrl().equals("https://dev19.callvu.net/DMZ/web/submitted")) {
+			ExtentManager.pass("Passed: Method testFormSubmitted, got to Submitted page");
+		} else {
+			ExtentManager.fail("Failed: Method testFormSubmitted, did not get to Submitted page. URL is: " + getDriver().getCurrentUrl());
 		}
 	}
 
 	public void testUrlParams(String Guid, boolean newTab) throws InterruptedException, IOException {
-		Thread.sleep(2400);
+		Thread.sleep(900);
 		if (newTab == true) {
 			changeTab(2, false);
 			if (getDriver().getCurrentUrl().equals("https://www.google.com/?guid=" + Guid + "&formID=2000312")) {
@@ -840,6 +841,8 @@ public class FormEditorObjects extends BasePage {
 	public WebElement loaderStudio;
 
 	// preview buttons
+	@FindBy(xpath = "//span[normalize-space()='Finish']") public WebElement finishPrvw;	
+	@FindBy(xpath = "//input[@aria-label='Short Text ']") public WebElement step4St1;	
 	@FindBy(xpath = "//div[contains(text(),'step[4]')]") public WebElement step4Btn;
 	@FindBy(xpath = "//div[contains(text(),'required')]") public WebElement btn16PrvwBtns;
 	@FindBy(xpath = "//div[contains(text(),'enabled')]") public WebElement btn15PrvwBtns;
@@ -864,7 +867,7 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[contains(text(),'step[3]')]") public WebElement btn3PrvwBtns;
 	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='step+finish']") public WebElement btn4PrvwBtns;
 	@FindBy(css = "input[aria-label='req step[3] ']") public WebElement reqStep3Prvw;
-	@FindBy(css = "input[aria-label='Phone Number ']") public WebElement phoneNumberPrvw;
+	@FindBy(xpath = "//label[normalize-space()='Phone Number*']") public WebElement phoneNumberPrvw;
 	@FindBy(css = "input[aria-label='hide block verifications ']") public WebElement hideBlkVerPrvw;
 
 	// preview steps

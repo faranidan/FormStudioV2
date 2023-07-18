@@ -1,3 +1,10 @@
+Version: 1.21 ~~ 18.07.23, 19:30
+Whats new??
+    * Save button of Rules changed to close the Rules section, thereby bugging the tests - Fixed
+        * All tests should be working as expected now, in response to new design
+        * If save of rules is reverted, revert back to v1.2
+    * Fixed the buttonsPreview test to test the submitted page instead of the image [changing in each form]
+
 Version: 1.2 ~~ 10.07.23, 18:30
 Whats new??
     * Changed EndFormImg to endFormFicx [Thank you page update]

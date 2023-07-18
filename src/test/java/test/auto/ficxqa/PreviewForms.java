@@ -149,7 +149,7 @@ public class PreviewForms extends Hooks {
 		FormEditorObjects forms = new FormEditorObjects();
 		try {
 			System.out.println("Test previewButtons started...");
-			forms.openSavedForm("AutoButtonStepTest");
+			forms.openSavedForm("AutoButtonStepTest"); 
 			forms.testBtns1();
 			forms.testBtns2();
 			forms.testBtns3();
