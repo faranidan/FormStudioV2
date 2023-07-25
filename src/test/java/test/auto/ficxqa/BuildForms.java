@@ -134,18 +134,17 @@ public class BuildForms extends Hooks {
             forms.addOutcome(forms.fieldStatusVisible);
             forms.addOutcome(forms.fieldStatusRequired);
             forms.addOutcome(forms.fieldStatusHidden);
-            forms.ruleSaveBtn.click();
             forms.addNewRule("2", "email");
             forms.ruleOutcome(forms.chkbxFieldSlct, forms.fieldStatusDisabled);
             forms.addOutcome(forms.fieldStatusEnabled);
             forms.addOutcome(forms.fieldStatusHidden);
             forms.addOutcome(forms.fieldStatusRequired);
             forms.addOutcome(forms.fieldStatusVisible);
-            forms.ruleSaveBtn.click();
             forms.addNewRule("off", "!phn");
             forms.addRuleByBlock(forms.Block2, forms.fieldStatusHidden);
             forms.addNewRule("on", "phn");
             forms.addRuleByBlock(forms.Block2, forms.fieldStatusVisible);
+            forms.actionCancelBtnRules.click();
             forms.saveForm();
             System.out.println("Test buildRules ended successfully.");    
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){

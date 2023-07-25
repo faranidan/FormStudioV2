@@ -1,3 +1,14 @@
+Version: 1.30 ~~ 25.07.23, 16:30
+Whats new??
+    * This version is compatible with formStudio v6.9.15, and all tests should work properly!
+    * Save button of Rules Fixed by FE - reverted back the ruleOutcome method to save after every add
+    * Modified startPrvwTest method to be universal and fit into openSavedForm method -> 
+        It now opens the form + preview + changeTab
+    * Fixed Preview of Rules test - fixing the test form created solved the issue
+    * Changed createForm form names & previewForm form names - so that issues won't affect each other
+    * Updated previewDropdown test to disclude the downgraded clearing feature so it won't return a failure  
+
+
 Version: 1.21 ~~ 18.07.23, 19:30
 Whats new??
     * Save button of Rules changed to close the Rules section, thereby bugging the tests - Fixed

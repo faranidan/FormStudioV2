@@ -98,6 +98,7 @@ public class FormEditorObjects extends BasePage {
 		waitForInvisibility(openFormBtn, Duration.ofSeconds(6));
 		ExtentManager.pass("Opened desired form: " + name);
 		Thread.sleep(600);
+		startPrvwTest();
 	}
 
 	public void saveForm() throws InterruptedException, IOException {
@@ -268,9 +269,11 @@ public class FormEditorObjects extends BasePage {
 		testEmptyDDownInput(dropdown1, "Please Select");
 		testEmptyDDownInput(autocomplete1, "Start typing...");
 		testEmptyDDownInput(ms1Selected, "Please Select");
+		/*  ** Feature downgraded, not in product req at the moment **
 		testEmptyDDownInput(dropdown2, "Please Select");
 		testEmptyDDownInput(autocomplete2, "Start typing...");
 		testEmptyDDownInput(ms2Selected, "Please Select");
+		*/
 	}
 
 	public void dropdownDataClear1() throws InterruptedException {
@@ -288,8 +291,10 @@ public class FormEditorObjects extends BasePage {
 		testDropdownClearing(ms1Item4);
 	}
 
-	public void dropdownDataClear2() throws InterruptedException {
+	public void dropdownDataClear2() throws InterruptedException, IOException {
 		ExtentManager.log("Starting dropdownDataClear2 test...");
+		ExtentManager.log("** Feature downgraded, not in product req at the moment **");
+		/* 
 		formHeader.click();
 		act.moveToElement(dropdown2).click(dropdown2).perform();
 		Thread.sleep(300);
@@ -301,6 +306,9 @@ public class FormEditorObjects extends BasePage {
 		act.moveToElement(multiSelect2).click().perform();
 		Thread.sleep(300);
 		testDropdownClearing(ms2Item3);
+		*/
+		prvwDone.click();
+		testFormSubmitted();
 	}
 
 	public void testDropdownClearing(WebElement item) {
@@ -431,7 +439,7 @@ public class FormEditorObjects extends BasePage {
 			advancedMenu.click();
 			editRulesBtn.click();
 		} else {
-			act.scrollToElement(createNewRule).click(createNewRule).perform();
+			act.moveToElement(createNewRule).click().perform();
 		}
 		act.click(ruleName).sendKeys(enterRuleName).perform();
 		Thread.sleep(600);
@@ -466,21 +474,20 @@ public class FormEditorObjects extends BasePage {
 		waitForElement(fieldStatus, Duration.ofSeconds(3));
 		fieldStatus.click();
 		ExtentManager.pass("Selected a field & outcome for rule");
-		//act.moveToElement(ruleSaveBtn).click().perform();
-		//ExtentManager.pass("Saved rule");
+		act.moveToElement(ruleSaveBtn).click().perform();
+		ExtentManager.pass("Saved rule");
 	}
 
 	public void addOutcome(WebElement fieldStatus) throws InterruptedException, IOException {
 		ExtentManager.log("Starting addOutcome method");
-		//act.moveToElement(newRuleBtn).click().perform();
-		newRuleBtn.click();
+		newOutcomeBtn.click();
 		ExtentManager.pass("Added New Outcome to the rule");
 		act.moveToElement(nextFieldStatus).click().perform();
 		fieldStatus.click();
 		ExtentManager.pass("Selected status to next field in line [auto selected next field]");
-		//act.scrollToElement(ruleUpdateSave).click(ruleUpdateSave).perform();
+		ruleUpdateSave.click();
 		Thread.sleep(600);
-		ExtentManager.pass("Saved-Update rule");
+		ExtentManager.pass("Updated saved rule");
 	}
 
 	public void addRuleByBlock(WebElement block, WebElement blockStatus) throws InterruptedException, IOException {
@@ -629,7 +636,6 @@ public class FormEditorObjects extends BasePage {
 				"Started method testBtns1: btns steps w/o req, hidden steps, rules. testing rules, validations, finish + hidden");
 		ExtentManager.log(
 				"Started method testBtns1: btns steps w/o req, hidden steps, rules. testing rules, validations, finish + hidden");
-		startBtnsPrvwTest();
 		testBtnReqMsg(btn1PrvwBtns, "btn1");
 		testBtnReqMsg(btn2PrvwBtns, "btn2");
 		testBtnReqMsg(btn4PrvwBtns, "btn4");
@@ -656,7 +662,7 @@ public class FormEditorObjects extends BasePage {
 	public void testBtns2() throws InterruptedException, IOException {
 		System.out.println("Started method testBtns2: btn step+finish, testing validations + finish");
 		ExtentManager.log("Started method testBtns2: btn step+finish, testing validations + finish");
-		startBtnsPrvwTest();
+		startPrvwTest();
 		act.moveToElement(phoneNumberPrvw).click().sendKeys("1").perform();
 		btn4PrvwBtns.click();
 		testFormSubmitted();
@@ -669,7 +675,7 @@ public class FormEditorObjects extends BasePage {
 	public void testBtns3() throws InterruptedException, IOException {
 		ExtentManager.log("Started method testBtns3: btns- url new tab [req,finish], testing params & validations");
 		System.out.println("Started method testBtns3: btns- url new tab [req,finish], testing params & validations");
-		startBtnsPrvwTest();
+		startPrvwTest();
 		act.moveToElement(phoneNumberPrvw).click().sendKeys("1").perform();
 		nextStepBtnPrvw.click();
 		testBtnReqMsg(btn5PrvwBtns, "btn5");
@@ -694,7 +700,7 @@ public class FormEditorObjects extends BasePage {
 				.log("Started method testBtns4: btns- url same tab [req,finish], testing params, finish & validations");
 		System.out.println(
 				"Started method testBtns4: btns- url same tab [req,finish], testing params, finish & validations");
-		startBtnsPrvwTest();
+		startPrvwTest();
 		btn3PrvwBtns.click();
 		testBtnReqMsg(btn9PrvwBtns, "btn9");
 		testBtnReqMsg(btn10PrvwBtns, "btn10");
@@ -706,7 +712,7 @@ public class FormEditorObjects extends BasePage {
 		btn9PrvwBtns.click();
 		testUrlParams(GUID, false);
 
-		startBtnsPrvwTest();
+		startPrvwTest();
 		btn3PrvwBtns.click();
 		CheckboxBtnsPrvw.click();
 		String GUID2 = getGuid();
@@ -719,7 +725,7 @@ public class FormEditorObjects extends BasePage {
 	public void testBtns5() throws InterruptedException, IOException {
 		ExtentManager.log("Started method testBtns5: btns rules: testing all rules & required validations");
 		System.out.println("Started method testBtns5: btns rules: testing all rules & required validations");
-		startBtnsPrvwTest();
+		startPrvwTest();
 		step4Btn.click();
 		Thread.sleep(600);
 		testRulesEnabled(btn13PrvwBtns);
@@ -767,7 +773,7 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void testFormSubmitted() throws InterruptedException, IOException {
-		Thread.sleep(1200);
+		Thread.sleep(2100);
 		if (getDriver().getCurrentUrl().equals("https://dev19.callvu.net/DMZ/web/submitted")) {
 			ExtentManager.pass("Passed: Method testFormSubmitted, got to Submitted page");
 		} else {
@@ -805,11 +811,11 @@ public class FormEditorObjects extends BasePage {
 		}
 	}
 
-	public void startBtnsPrvwTest() throws InterruptedException, IOException {
+	public void startPrvwTest() throws InterruptedException, IOException {
 		waitForClick(previewForm, Duration.ofSeconds(6));
 		previewForm.click();
 		changeTab(1, false);
-		waitForClick(buttonsStep1Hdr, Duration.ofSeconds(3));
+		waitForInvisibility(loaderPrvw, Duration.ofSeconds(6));
 		ExtentManager.pass("Previewed the form & changed tab");
 	}
 
@@ -821,6 +827,7 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void testBtnReqMsg(WebElement btn, String btnName) throws InterruptedException, IOException {
+		Thread.sleep(900);
 		btn.click();
 		Thread.sleep(1200);
 		testErrorMsg(btnName + " Required validation");
@@ -927,7 +934,7 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[normalize-space()='Update']") public WebElement ruleUpdateSave;
 	@FindBy(css = "div[class='v-input v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-select theme--light'] div[class='v-select__slot']")
 	public WebElement nextFieldStatus;
-	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='New']") public WebElement newRuleBtn;
+	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='New']") public WebElement newOutcomeBtn;
 	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='Save']") public WebElement ruleSaveBtn;
 	@FindBy(xpath = "(//input[@aria-label='Select Block Status']") public WebElement ruleSelectBlockStatus;
 	@FindBy(xpath = "//div[contains(text(),'Title')]") public WebElement ruleBlock2;

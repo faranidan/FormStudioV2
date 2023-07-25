@@ -26,11 +26,7 @@ public class PreviewForms extends Hooks {
 		FormEditorObjects forms = new FormEditorObjects();
 		try {
 			System.out.println("Test previewfileUpload started");
-			forms.openSavedForm("AutoFileUpload");
-			forms.previewForm.click();
-			ExtentManager.pass("Opened form: AutoFileUpload & clicked Preview");
-			forms.switchTab();
-			ExtentManager.pass("Switched to preview tab");
+			forms.openSavedForm("PrvwAutoTest-FileUpload");
 			forms.previewUploadFiles1();
 			forms.previewUploadFiles2();
 			forms.previewUploadFiles3();
@@ -49,10 +45,7 @@ public class PreviewForms extends Hooks {
 		try {
 			ExtentManager.log("STARTING previwSum test...");
 			System.out.println("Test previewSum started");
-			forms.openSavedForm("Auto SumAPI");
-			forms.previewForm.click();
-			forms.switchTab();
-			forms.devTools("https://qa19.callvu.net/LAN/APIGateway/CallAPI?Name=Sum");
+			forms.openSavedForm("PrvwAutoTest-SumAPI");
 			forms.previewSum(12, 12);
 			forms.previewDone();
 		} catch (NoSuchElementException | ElementClickInterceptedException | TimeoutException e) {
@@ -70,9 +63,7 @@ public class PreviewForms extends Hooks {
 		try {
 			ExtentManager.log("STARTING previwDropdown test...");
 			System.out.println("Test previewDropdown started");
-			forms.openSavedForm("idanActionsDD[4autoTest]");
-			forms.previewForm.click();
-			forms.switchTab();
+			forms.openSavedForm("PrvwAutoTest-Actions");
 			forms.dropdownFill1();
 			forms.dropdownFill2();
 			forms.dropdownSelectedFieldClear();
@@ -93,9 +84,7 @@ public class PreviewForms extends Hooks {
 		try {
 			ExtentManager.log("STARTING previewRules test...");
 			System.out.println("Test previewRules Started");
-			forms.openSavedForm("AutoRulesBasicFields");
-			forms.previewForm.click();
-			forms.switchTab();
+			forms.openSavedForm("PrvwAutoTest-Rules");
 			forms.prvwRulesStep1();
 			forms.prvwRulesStep2();
 			forms.prvwRulesStep3();
@@ -115,9 +104,7 @@ public class PreviewForms extends Hooks {
 		try {
 			ExtentManager.log("STARTING previewSteps test...");
 			System.out.println("Test previewSteps Started");
-			forms.openSavedForm("AutoSteps");
-			forms.previewForm.click();
-			forms.switchTab();
+			forms.openSavedForm("PrvwAutoTest-Steps");
 			forms.testStepName(forms.nextStepBtnPrvw, "2");
 			forms.nextStepBtnPrvw.click();
 			Thread.sleep(600);
@@ -149,7 +136,7 @@ public class PreviewForms extends Hooks {
 		FormEditorObjects forms = new FormEditorObjects();
 		try {
 			System.out.println("Test previewButtons started...");
-			forms.openSavedForm("AutoButtonStepTest"); 
+			forms.openSavedForm("PrvwAutoTest-Buttons"); 
 			forms.testBtns1();
 			forms.testBtns2();
 			forms.testBtns3();
