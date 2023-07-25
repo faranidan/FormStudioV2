@@ -1,6 +1,7 @@
 target
 report/*.html
 test-output
+WIP.java
 
 # Compiled class file
 *.class

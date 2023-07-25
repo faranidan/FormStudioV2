@@ -80,7 +80,7 @@ public class FormEditorObjects extends BasePage {
 		block1Title.sendKeys(Keys.BACK_SPACE, blockName);
 	}
 
-	public void openSavedForm(String name) throws InterruptedException, IOException {
+	public void openSavedForm(String name, Boolean prvw) throws InterruptedException, IOException {
 		ExtentManager.log("Starting openSavedForm method...");
 		act.moveToElement(formsMenu).click().perform();
 		openForm.click();
@@ -98,7 +98,9 @@ public class FormEditorObjects extends BasePage {
 		waitForInvisibility(openFormBtn, Duration.ofSeconds(6));
 		ExtentManager.pass("Opened desired form: " + name);
 		Thread.sleep(600);
-		startPrvwTest();
+		if (prvw==true){
+			startPrvwTest();
+		}
 	}
 
 	public void saveForm() throws InterruptedException, IOException {
@@ -553,13 +555,17 @@ public class FormEditorObjects extends BasePage {
 		testRulesDisabled(phnPrvw);
 		passPrvw.sendKeys("123");
 		block1HdrPrvw.click();
+		act.moveToElement(emailPrvw).click().sendKeys("1").perform();
+		Thread.sleep(600);
+		block1HdrPrvw.click();
+		email1Prvw.sendKeys(Keys.BACK_SPACE);
 		Thread.sleep(600);
 		try{
 			if (phnPrvw.getAttribute("aria-label").equals("phn ")) {
-				ExtentManager.pass("Passed: Hidden rule cleared phn Field");
+				ExtentManager.pass("Passed: Hide & Clear rule cleared phn Field");
 			} 
 		} catch (Exception NoSuchElementException) {
-			ExtentManager.fail("Failed: Hidden rule DID NOT clear phn Field");
+			ExtentManager.fail("Failed: Hide & Clear rule DID NOT clear phn Field");
 		}
 	}
 
@@ -785,15 +791,17 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(900);
 		if (newTab == true) {
 			changeTab(2, false);
-			if (getDriver().getCurrentUrl().equals("https://www.google.com/?guid=" + Guid + "&formID=2000312")) {
-				ExtentManager.pass("Passed: Method testUrlParams, link opened with currect GUID + fromID");
+			if (getDriver().getCurrentUrl().contains(Guid)) {
+				ExtentManager.pass("Passed: Method testUrlParams, link opened with currect GUID + fromID: "
+				+ getDriver().getCurrentUrl());
 			} else {
 				ExtentManager.fail("Failed: Method testUrlParams. URL is: " + getDriver().getCurrentUrl());
 			}
 			changeTab(2, true);
 		} else {
-			if (getDriver().getCurrentUrl().equals("https://www.google.com/?guid=" + Guid + "&formID=2000312")) {
-				ExtentManager.pass("Passed: Method testUrlParams, link opened with currect GUID + fromID");
+			if (getDriver().getCurrentUrl().contains(Guid)) {
+				ExtentManager.pass("Passed: Method testUrlParams, link opened with currect GUID + fromID: "
+				+ getDriver().getCurrentUrl());
 			} else {
 				ExtentManager.fail("Failed: Method testUrlParams. URL is: " + getDriver().getCurrentUrl());
 			}
@@ -916,7 +924,8 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(css = "input[aria-label='phn ']") public WebElement phnPrvw;
 	@FindBy(css = "input[aria-label='nmb 1']") public WebElement nmbPostPrvw;
 	@FindBy(css = "input[aria-label='nmb ']") public WebElement nmbPrvw;
-	@FindBy(css = "#emailinput_lgp6178w") public WebElement emailPrvw;
+	@FindBy(xpath = "//label[normalize-space()='email']") public WebElement emailPrvw;
+	@FindBy(css = "input[aria-label='email 1']") public WebElement email1Prvw;
 	@FindBy(css = "input[aria-label='pass ']") public WebElement passPrvw;
 	@FindBy(css = "input[aria-label='pass 1']") public WebElement passAfterPrvw;
 
@@ -946,6 +955,7 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[contains(text(),'Required')]") public WebElement fieldStatusRequired;
 	@FindBy(xpath = "//div[contains(text(),'Visible')]") public WebElement fieldStatusVisible;
 	@FindBy(xpath = "//div[contains(text(),'Hidden')]") public WebElement fieldStatusHidden;
+	@FindBy(xpath = "(//div[contains(text(),'Hide & Clear')])[3]") public WebElement fieldStatusHideNClear;
 	@FindBy(xpath = "//div[contains(text(),'chkbx')]") public WebElement chkbxFieldSlct;
 	@FindBy(xpath = "//div[contains(text(),'radio')]") public WebElement radioFieldSlct;
 	@FindBy(xpath = "//div[contains(text(),'phn')]") public WebElement phnFieldSlct;

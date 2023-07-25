@@ -21,7 +21,7 @@ public class WIP extends Hooks {
     @Test
 	public void testGetUrl() throws IOException, InterruptedException {
 		FormEditorObjects forms = new FormEditorObjects();
-        forms.openSavedForm("AutoButtonStepTest");
+        forms.openSavedForm("AutoButtonStepTest", false);
         System.out.println(forms.getCurrentUrl()); 
         forms.previewForm.click();
 		forms.changeTab(1, false);
@@ -37,7 +37,7 @@ public class WIP extends Hooks {
     public void previewButtons() throws InterruptedException, IOException{
         FormEditorObjects forms = new FormEditorObjects();
         try{
-            forms.openSavedForm("AutoButtonStepTest");
+            forms.openSavedForm("AutoButtonStepTest", true);
             forms.testBtns1();
             forms.testBtns2();
             forms.testBtns3();

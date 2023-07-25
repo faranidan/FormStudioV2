@@ -26,7 +26,7 @@ public class PreviewForms extends Hooks {
 		FormEditorObjects forms = new FormEditorObjects();
 		try {
 			System.out.println("Test previewfileUpload started");
-			forms.openSavedForm("PrvwAutoTest-FileUpload");
+			forms.openSavedForm("PrvwAutoTest-FileUpload", true);
 			forms.previewUploadFiles1();
 			forms.previewUploadFiles2();
 			forms.previewUploadFiles3();
@@ -45,7 +45,7 @@ public class PreviewForms extends Hooks {
 		try {
 			ExtentManager.log("STARTING previwSum test...");
 			System.out.println("Test previewSum started");
-			forms.openSavedForm("PrvwAutoTest-SumAPI");
+			forms.openSavedForm("PrvwAutoTest-SumAPI", true);
 			forms.previewSum(12, 12);
 			forms.previewDone();
 		} catch (NoSuchElementException | ElementClickInterceptedException | TimeoutException e) {
@@ -63,7 +63,7 @@ public class PreviewForms extends Hooks {
 		try {
 			ExtentManager.log("STARTING previwDropdown test...");
 			System.out.println("Test previewDropdown started");
-			forms.openSavedForm("PrvwAutoTest-Actions");
+			forms.openSavedForm("PrvwAutoTest-Actions", true);
 			forms.dropdownFill1();
 			forms.dropdownFill2();
 			forms.dropdownSelectedFieldClear();
@@ -84,7 +84,7 @@ public class PreviewForms extends Hooks {
 		try {
 			ExtentManager.log("STARTING previewRules test...");
 			System.out.println("Test previewRules Started");
-			forms.openSavedForm("PrvwAutoTest-Rules");
+			forms.openSavedForm("PrvwAutoTest-Rules", true);
 			forms.prvwRulesStep1();
 			forms.prvwRulesStep2();
 			forms.prvwRulesStep3();
@@ -104,7 +104,7 @@ public class PreviewForms extends Hooks {
 		try {
 			ExtentManager.log("STARTING previewSteps test...");
 			System.out.println("Test previewSteps Started");
-			forms.openSavedForm("PrvwAutoTest-Steps");
+			forms.openSavedForm("PrvwAutoTest-Steps", true);
 			forms.testStepName(forms.nextStepBtnPrvw, "2");
 			forms.nextStepBtnPrvw.click();
 			Thread.sleep(600);
@@ -136,7 +136,7 @@ public class PreviewForms extends Hooks {
 		FormEditorObjects forms = new FormEditorObjects();
 		try {
 			System.out.println("Test previewButtons started...");
-			forms.openSavedForm("PrvwAutoTest-Buttons"); 
+			forms.openSavedForm("PrvwAutoTest-Buttons", true); 
 			forms.testBtns1();
 			forms.testBtns2();
 			forms.testBtns3();

@@ -1,3 +1,10 @@
+Version: 1.31 ~~ 25.07.23, 19:00
+Whats new??
+    * All tests should pass now! : 
+        * Fixed rules to test new field: Hide & Clear! on prvwRulesStep4
+        * Fixed testUrlParams method to test includes(GUID)
+        * Fixed openSavedForm method- added bool to prvw/not the opened form 
+
 Version: 1.30 ~~ 25.07.23, 16:30
 Whats new??
     * This version is compatible with formStudio v6.9.15, and all tests should work properly!

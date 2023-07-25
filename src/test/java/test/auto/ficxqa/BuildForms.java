@@ -126,7 +126,7 @@ public class BuildForms extends Hooks {
         ExtentManager.log("Starting buildRules test...");
         FormEditorObjects forms = new FormEditorObjects();
         System.out.println("Test buildRules started");
-        forms.openSavedForm("AutoRulesBasicFields");
+        forms.openSavedForm("AutoRulesBasicFields", false);
         try{
             forms.addNewRule("1", "pass");
             forms.ruleOutcome(forms.chkbxFieldSlct, forms.fieldStatusEnabled);
