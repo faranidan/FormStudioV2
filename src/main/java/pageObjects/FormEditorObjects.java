@@ -179,9 +179,10 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.log("Starting previewSum test...");
 		prvwOneInput.sendKeys(var1.toString());
 		prvwTwoInput.sendKeys(var2.toString());
+		prvwSumHdr.click();
+		Thread.sleep(600);
 		prvwThreeInput.click();
 		ExtentManager.pass("Sent selected values: " + var1.toString() + "+" + var2.toString());
-		Thread.sleep(900);
 		if (prvwThreeInputAfter.getAccessibleName().equals("three " + (var1 + var2))) {
 			ExtentManager.pass("Success! three = " + (var1 + var2));
 			System.out.println("Success! three = " + (var1 + var2));
@@ -190,8 +191,9 @@ public class FormEditorObjects extends BasePage {
 			System.out.println("Failed! three input unrecognizable");
 			Assert.fail();
 		}
+		prvwSumHdr.click();
+		Thread.sleep(600);		
 		prvwFourInput.click();
-		Thread.sleep(900);
 		if (prvwFourInputAfter.getAccessibleName().equals("four " + ((var1 + var2) * 2))) {
 			ExtentManager.pass("Success! four = " + ((var1 + var2) * 2));
 			System.out.println("Success! four = " + ((var1 + var2) * 2));
@@ -200,7 +202,6 @@ public class FormEditorObjects extends BasePage {
 			System.out.println("Failed! four input unrecognizable");
 			Assert.fail();
 		}
-		Thread.sleep(600);
 	}
 
 	public void previewDone() throws InterruptedException, IOException {
@@ -821,7 +822,8 @@ public class FormEditorObjects extends BasePage {
 
 	public void startPrvwTest() throws InterruptedException, IOException {
 		waitForClick(previewForm, Duration.ofSeconds(6));
-		previewForm.click();
+		act.moveToElement(previewForm).click().perform();
+		//previewForm.click();
 		changeTab(1, false);
 		waitForInvisibility(loaderPrvw, Duration.ofSeconds(6));
 		ExtentManager.pass("Previewed the form & changed tab");
@@ -1079,6 +1081,7 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[normalize-space()='New Action']") public WebElement newActionBtn;
 
 	// preview sum api
+	@FindBy(css = "h1[aria-label='Page1']") public WebElement prvwSumHdr;
 	@FindBy(css = "[aria-label='one ']") public WebElement prvwOneInput;
 	@FindBy(css = "[aria-label='two ']") public WebElement prvwTwoInput;
 	@FindBy(css = "[aria-label='three ']") public WebElement prvwThreeInput;
