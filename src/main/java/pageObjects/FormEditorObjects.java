@@ -260,7 +260,8 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		ac2Item1.click();
 		act.moveToElement(multiSelect2).click().perform();
-		ms2Item3.click();
+		ms2Item1.click();
+		ms2Item2.click();
 		ExtentManager.pass("Selected fields for dropdown2, autocomplete2 & multiSelect2 successfully");
 	}
 
@@ -998,7 +999,8 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select2')]") public WebElement ms2Selected;
 	@FindBy(css = "#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title") public WebElement dd2Item1;
 	@FindBy(css = "#app div:nth-of-type(4) [role='listitem']:nth-of-type(1) .v-list__tile__title") public WebElement ac2Item1;
-	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(3) .v-list__tile--link") public WebElement ms2Item3;
+	@FindBy(xpath = "(//div[@class='v-list__tile__title'][normalize-space()='Olga'])[1]") public WebElement ms2Item1;
+	@FindBy(xpath = "(//div[@class='v-list__tile__title'][normalize-space()='Oleg'])[1]") public WebElement ms2Item2;
 	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown2')]") public WebElement dropdown2;
 	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown - ListApi')]") public WebElement dropdown1;
 	@FindBy(xpath = "//input[contains(@aria-label,'Autocomplete - ListObjApi')]") public WebElement autocomplete1;

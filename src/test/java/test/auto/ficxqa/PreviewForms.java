@@ -5,7 +5,6 @@ import org.openqa.selenium.NoSuchElementException;
 
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.TimeoutException;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -33,7 +32,7 @@ public class PreviewForms extends Hooks {
 		} catch (NoSuchElementException | ElementClickInterceptedException | TimeoutException e) {
 			System.out.println("There was a test failure under known exceptions.");
 			e.printStackTrace();
-			Assert.fail("There was a test failure: "+e.getMessage());
+			ExtentManager.fail("There was a test failure: "+e.getMessage());
 		} finally {
 			System.out.println("Test previewfileUpload ended.");
 		}
@@ -51,7 +50,7 @@ public class PreviewForms extends Hooks {
 		} catch (NoSuchElementException | ElementClickInterceptedException | TimeoutException e) {
 			System.out.println("There was a test failure under known exceptions.");
 			e.printStackTrace();
-			Assert.fail("There was a test failure: "+e.getMessage());
+			ExtentManager.fail("There was a test failure: "+e.getMessage());
 		} finally {
 			System.out.println("Test previewSum ended.");
 		}
@@ -72,7 +71,7 @@ public class PreviewForms extends Hooks {
 		} catch (NoSuchElementException | ElementClickInterceptedException | TimeoutException e) {
 			System.out.println("There was a test failure under known exceptions.");
 			e.printStackTrace();
-			Assert.fail("There was a test failure: "+e.getMessage());
+			ExtentManager.fail("There was a test failure: "+e.getMessage());
 		} finally {
 			System.out.println("Test previewDropdown ended.");
 		}
@@ -92,7 +91,7 @@ public class PreviewForms extends Hooks {
 		} catch (NoSuchElementException | ElementClickInterceptedException | TimeoutException e) {
 			System.out.println("There was a test failure under known exceptions.");
 			e.printStackTrace();
-			Assert.fail("There was a test failure: "+e.getMessage());
+			ExtentManager.fail("There was a test failure: "+e.getMessage());
 		} finally {
 			System.out.println("Test previewRules ended.");
 		}
@@ -125,7 +124,7 @@ public class PreviewForms extends Hooks {
 		} catch (NoSuchElementException | ElementClickInterceptedException | TimeoutException e) {
 			System.out.println("There was a test failure under known exceptions.");
 			e.printStackTrace();
-			Assert.fail("There was a test failure: "+e.getMessage());
+			ExtentManager.fail("There was a test failure: "+e.getMessage());
 		} finally {
 			System.out.println("Test previewRules ended.");
 		}
@@ -145,7 +144,7 @@ public class PreviewForms extends Hooks {
 		} catch (NoSuchElementException | ElementClickInterceptedException | TimeoutException e) {
 			System.out.println("There was a test failure under known exceptions.");
 			e.printStackTrace();
-			Assert.fail("There was a test failure: "+e.getMessage());
+			ExtentManager.fail("There was a test failure: "+e.getMessage());
 		} finally {
 			System.out.println("Test previewButtons ended.");
 		}

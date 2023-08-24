@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -53,7 +52,7 @@ public class BuildForms extends Hooks {
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test bulidFileUpload failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: "+e.getMessage());
+            ExtentManager.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test bulidFileUpload end.");
         }
@@ -81,7 +80,7 @@ public class BuildForms extends Hooks {
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test buildBasicFields failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: "+e.getMessage());
+            ExtentManager.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test buildSumApi end.");
         }
@@ -115,7 +114,7 @@ public class BuildForms extends Hooks {
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test buildBasicFields failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: "+e.getMessage());
+            ExtentManager.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test buildBasicFields end.");
         }
@@ -150,7 +149,7 @@ public class BuildForms extends Hooks {
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test buildRules failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: "+e.getMessage());
+            ExtentManager.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test buildRules ended.");
         }
@@ -173,7 +172,7 @@ public class BuildForms extends Hooks {
         } catch (NoSuchElementException | ElementNotInteractableException | TimeoutException e){
             System.out.println("Test createSteps failed with a known excepion");
             e.printStackTrace();
-            Assert.fail("There was a test failure: "+e.getMessage());
+            ExtentManager.fail("There was a test failure: "+e.getMessage());
         } finally {
             System.out.println("Test createSteps ended.");
         }
