@@ -69,6 +69,7 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void renameFormTitle(String name) throws InterruptedException, IOException {
+		waitForClick(arrowFormName, Duration.ofSeconds(30));
 		act.moveToElement(arrowFormName).click().perform();
 		formName.click();
 		act.keyDown(Keys.SHIFT).sendKeys(Keys.HOME).keyUp(Keys.SHIFT).sendKeys(name).perform();
