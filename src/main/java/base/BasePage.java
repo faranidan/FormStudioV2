@@ -48,7 +48,6 @@ public class BasePage {
 			e.printStackTrace();
 		}
 		return name;
-		
 	}
 	
 	public static String timestamp() {

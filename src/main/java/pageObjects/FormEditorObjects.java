@@ -83,7 +83,7 @@ public class FormEditorObjects extends BasePage {
 
 	public void openSavedForm(String name, Boolean prvw) throws InterruptedException, IOException {
 		ExtentManager.log("Starting openSavedForm method...");
-		act.moveToElement(formsMenu).click().perform();
+		act.moveToElement(formsMenu).click(formsMenu).perform();
 		openForm.click();
 		ExtentManager.pass("Got to forms folder");
 		waitForElement(searchForms, Duration.ofSeconds(6));
