@@ -14,7 +14,6 @@ public class Hooks extends BasePage {
 	@BeforeSuite
 	public void setup() throws InterruptedException, IOException {
 		System.setProperty("webdriver.http.factory", "jdk-http-client");
-		getDriver().get(getUrl());
 	}
 
 	@AfterTest

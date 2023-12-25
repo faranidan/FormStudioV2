@@ -38,7 +38,7 @@ public class FormEditorObjects extends BasePage {
 	Actions act = new Actions(getDriver());
 
 	public void specificAttUpload(String size, String fileTypes1, String fileTypes2, String filesNumberLimit,
-			String errMsg) throws InterruptedException, IOException {
+		String errMsg) throws InterruptedException, IOException {
 		specificAtt.click();
 		waitForElement(limitSize, Duration.ofSeconds(3));
 		act.moveToElement(limitSize).click(limitSize).perform();
@@ -82,8 +82,10 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void openSavedForm(String name, Boolean prvw) throws InterruptedException, IOException {
-		ExtentManager.log("Starting openSavedForm method...");
+		logMsg(0,"Starting openSavedForm method...");
+		waitForClick(formsMenu, Duration.ofSeconds(12));
 		act.moveToElement(formsMenu).click(formsMenu).perform();
+		Thread.sleep(1200);
 		openForm.click();
 		ExtentManager.pass("Got to forms folder");
 		waitForElement(searchForms, Duration.ofSeconds(6));
@@ -171,6 +173,7 @@ public class FormEditorObjects extends BasePage {
 			getDriver().switchTo().window(tabsList.get(tabNmbr)); // 2nd tab
 			getDriver().close();
 			getDriver().switchTo().window(tabsList.get(tabNmbr - 1));
+			Thread.sleep(1200);
 		} else {
 			getDriver().switchTo().window(tabsList.get(tabNmbr));
 		}
@@ -180,27 +183,24 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.log("Starting previewSum test...");
 		prvwOneInput.sendKeys(var1.toString());
 		prvwTwoInput.sendKeys(var2.toString());
-		prvwSumHdr.click();
 		Thread.sleep(600);
+		act.moveToElement(prvwSumHdr).click().perform();
+		Thread.sleep(3600);
 		prvwThreeInput.click();
 		ExtentManager.pass("Sent selected values: " + var1.toString() + "+" + var2.toString());
 		if (prvwThreeInputAfter.getAccessibleName().equals("three " + (var1 + var2))) {
-			ExtentManager.pass("Success! three = " + (var1 + var2));
-			System.out.println("Success! three = " + (var1 + var2));
+			logMsg(1,"Success! three = " + (var1 + var2));
 		} else {
-			ExtentManager.fail("Failed! three input unrecognizable");
-			System.out.println("Failed! three input unrecognizable");
+			logMsg(2,"Failed! three input unrecognizable");
 			Assert.fail();
 		}
-		prvwSumHdr.click();
+		act.moveToElement(prvwSumHdr).click().perform();
 		Thread.sleep(600);		
 		prvwFourInput.click();
 		if (prvwFourInputAfter.getAccessibleName().equals("four " + ((var1 + var2) * 2))) {
-			ExtentManager.pass("Success! four = " + ((var1 + var2) * 2));
-			System.out.println("Success! four = " + ((var1 + var2) * 2));
+			logMsg(1,"Success! four = " + (var1 + var2)*2);
 		} else {
-			ExtentManager.fail("Failed! four input unrecognizable");
-			System.out.println("Failed! four input unrecognizable");
+			logMsg(2,"Failed! four input unrecognizable");
 			Assert.fail();
 		}
 	}
@@ -595,9 +595,9 @@ public class FormEditorObjects extends BasePage {
 	public void testErrorMsg(String type) throws InterruptedException {
 		try {
 			errorMsgPrvw.isDisplayed();
-			ExtentManager.pass(type + "- Passed. Error msg appeared");
+			logMsg(1, type + "- Passed. Error/Required msg appeared");
 		} catch (Exception e) {
-			ExtentManager.fail(type + "- Failed. Error msg did not appear");
+			logMsg(2,type + "- Failed. Error/Required msg did not appear");
 		}
 	}
 
@@ -641,15 +641,12 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void testBtns1() throws InterruptedException, IOException {
-		System.out.println(
-				"Started method testBtns1: btns steps w/o req, hidden steps, rules. testing rules, validations, finish + hidden");
-		ExtentManager.log(
-				"Started method testBtns1: btns steps w/o req, hidden steps, rules. testing rules, validations, finish + hidden");
+		logMsg(0,"Started method testBtns1: Testing req, rules, validations, finish + hidden");
 		testBtnReqMsg(btn1PrvwBtns, "btn1");
 		testBtnReqMsg(btn2PrvwBtns, "btn2");
 		testBtnReqMsg(btn4PrvwBtns, "btn4");
 		testBtnReqMsg(nextStepBtnPrvw, "Next Step");
-		ExtentManager.pass("Passed: All required Step buttons do validation");
+		logMsg(1, "Passed: All required Step buttons do validation");
 		btn3PrvwBtns.click();
 		testHiddenStep(backStepBtnPrvw, secondStepBtn);
 		backStepBtnPrvw.click();
@@ -664,26 +661,22 @@ public class FormEditorObjects extends BasePage {
 		testFormSubmitted();
 		ExtentManager.pass("Passed: Step[Finish Form] submitted form");
 		changeTab(1, true);
-		System.out.println("Ended method testBtns1 successfully.");
-		ExtentManager.log("Ended method testBtns1 successfully.");
+		logMsg(1,"Ended method testBtns1 successfully.");
 	}
 
 	public void testBtns2() throws InterruptedException, IOException {
-		System.out.println("Started method testBtns2: btn step+finish, testing validations + finish");
-		ExtentManager.log("Started method testBtns2: btn step+finish, testing validations + finish");
+		logMsg(0,"Started method testBtns2: btn step+finish, testing validations + finish");
 		startPrvwTest();
 		act.moveToElement(phoneNumberPrvw).click().sendKeys("1").perform();
 		btn4PrvwBtns.click();
 		testFormSubmitted();
 		ExtentManager.pass("Passed: Step[Finish Form] submitted form");
 		changeTab(1, true);
-		System.out.println("Ended method testBtns2 successfully.");
-		ExtentManager.log("Ended method testBtns2 successfully.");
-	}
+		logMsg(1,"Ended method testBtns2 successfully.");
+		}
 
 	public void testBtns3() throws InterruptedException, IOException {
-		ExtentManager.log("Started method testBtns3: btns- url new tab [req,finish], testing params & validations");
-		System.out.println("Started method testBtns3: btns- url new tab [req,finish], testing params & validations");
+		logMsg(0,"Started method testBtns3: btns- url new tab [req,finish], testing params & validations");
 		startPrvwTest();
 		act.moveToElement(phoneNumberPrvw).click().sendKeys("1").perform();
 		nextStepBtnPrvw.click();
@@ -692,6 +685,7 @@ public class FormEditorObjects extends BasePage {
 		testBtnReqMsg(btn8PrvwBtns, "btn8");
 		ExtentManager.pass("Passed: All required Buttons with URL[newTab] require validation");
 		String GUID = getGuid();
+		Thread.sleep(1200);
 		btn6PrvwBtns.click();
 		testUrlParams(GUID, true);
 		lt1PrvwBtns.sendKeys("Verrrrrrryyyy Looonnggg Textttt");
@@ -756,6 +750,7 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void testRequiredBtnRule(WebElement button, boolean shouldBeReq) throws InterruptedException {
+		logMsg(0,"Starting testRequiredBtnRule method");
 		if (shouldBeReq == false) {
 			try{
 				button.click();
@@ -766,69 +761,73 @@ public class FormEditorObjects extends BasePage {
 					CheckboxBtnsPrvw.click();
 					btn12PrvwBtns.click();
 				}
-				ExtentManager.pass("Passed: Required rule OFF on for button 'required'");
+				logMsg(1,"Passed: Required rule OFF on for button 'required'");
 			}catch(NoSuchElementException e){
-				ExtentManager.fail("Failed: Did not integrate with step 3 elements");
+				logMsg(2,"Failed: Did not integrate with step 3 elements");
 			}
 		} else {
 			button.click();
 			Thread.sleep(600);
 			if (errorMsgPrvw.isDisplayed()){
-				ExtentManager.pass("Passed: Required rule ON for button");
+				logMsg(1,"Passed: Required rule ON for button");
 			} else {
-				ExtentManager.fail("Failed: button name: " + button.getText());
+				logMsg(2,"Failed: button name: " + button.getText());
 			}
 		}
 	}
 
 	public void testFormSubmitted() throws InterruptedException, IOException {
+		logMsg(0,"Starting testFormSubmitted method");
 		Thread.sleep(2100);
 		if (getDriver().getCurrentUrl().equals("https://dev19.callvu.net/DMZ/web/submitted")) {
-			ExtentManager.pass("Passed: Method testFormSubmitted, got to Submitted page");
+			logMsg(1,"Passed: Method testFormSubmitted, got to Submitted page: https://dev19.callvu.net/DMZ/web/submitted");
 		} else {
-			ExtentManager.fail("Failed: Method testFormSubmitted, did not get to Submitted page. URL is: " + getDriver().getCurrentUrl());
+			logMsg(2,"Failed: Method testFormSubmitted, did not get to Submitted page. URL is: " + getDriver().getCurrentUrl());
 		}
 	}
 
 	public void testUrlParams(String Guid, boolean newTab) throws InterruptedException, IOException {
+		logMsg(0,"Starting testUrlParams method");
 		Thread.sleep(900);
 		if (newTab == true) {
 			changeTab(2, false);
 			if (getDriver().getCurrentUrl().contains(Guid)) {
-				ExtentManager.pass("Passed: Method testUrlParams, link opened with currect GUID + fromID: "
+				logMsg(1,"Passed: Method testUrlParams, link opened with currect GUID + fromID: "
 				+ getDriver().getCurrentUrl());
 			} else {
-				ExtentManager.fail("Failed: Method testUrlParams. URL is: " + getDriver().getCurrentUrl());
+				logMsg(2,"Failed: Method testUrlParams. URL is: " + getDriver().getCurrentUrl());
 			}
 			changeTab(2, true);
 		} else {
 			if (getDriver().getCurrentUrl().contains(Guid)) {
-				ExtentManager.pass("Passed: Method testUrlParams, link opened with currect GUID + fromID: "
+				logMsg(1,"Passed: Method testUrlParams, link opened with currect GUID + fromID: "
 				+ getDriver().getCurrentUrl());
 			} else {
-				ExtentManager.fail("Failed: Method testUrlParams. URL is: " + getDriver().getCurrentUrl());
+				logMsg(2,"Failed: Method testUrlParams. URL is: " + getDriver().getCurrentUrl());
 			}
 			changeTab(1, true);
 		}
 	}
 
-	public void testHiddenStep(WebElement step, WebElement btn) {
+	public void testHiddenStep(WebElement step, WebElement btn) throws InterruptedException {
 		try {
 			step.click();
-			ExtentManager.fail("Failed. Back Step should be hidden");
+			logMsg(2, "Failed. Back Step should be hidden");
 		} catch (NoSuchElementException e) {
-			ExtentManager.pass("Passed. Back Step is hidden. Clicking replacing btn");
+			logMsg(1, "Passed. Back Step is hidden. Clicking replacing btn");
 			btn.click();
+			Thread.sleep(2400);
 		}
 	}
 
 	public void startPrvwTest() throws InterruptedException, IOException {
+		logMsg(0,"Starting startPrvwTest method");
 		waitForClick(previewForm, Duration.ofSeconds(6));
 		act.moveToElement(previewForm).click().perform();
-		//previewForm.click();
+		Thread.sleep(1500);
 		changeTab(1, false);
 		waitForInvisibility(loaderPrvw, Duration.ofSeconds(6));
-		ExtentManager.pass("Previewed the form & changed tab");
+		logMsg(1,"Previewed the form & changed tab");
 	}
 
 	public String getGuid() throws InterruptedException, IOException {
@@ -839,9 +838,10 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void testBtnReqMsg(WebElement btn, String btnName) throws InterruptedException, IOException {
+		logMsg(0, "Starting testBtnReqMsg method for button: "+btnName);
 		Thread.sleep(900);
 		btn.click();
-		Thread.sleep(1200);
+		Thread.sleep(2100);
 		testErrorMsg(btnName + " Required validation");
 	}
 

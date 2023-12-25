@@ -17,7 +17,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
-	private String url;
 	private Properties prop;
 	public static String scrnShtDestPath;
 	
@@ -32,11 +31,6 @@ public class BasePage {
 		return WebDriverInstance.getDriver();
 	}
 
-	public String getUrl() throws IOException {
-		url = prop.getProperty("url");
-		return url;
-	}
-	
 	public static String takeSnapshot(String name) throws IOException, WebDriverException, InterruptedException {
 		File srcFile = ((TakesScreenshot)getDriver()).getScreenshotAs(OutputType.FILE);
 		String destFile = System.getProperty("user.dir")+ "\\target\\screenshots"+timestamp()+".png";
@@ -72,6 +66,21 @@ public class BasePage {
 	public static void waitForInvisibility(WebElement element, Duration timer) throws InterruptedException, IOException {
 		WebDriverWait wait = new WebDriverWait(getDriver(), timer);
 		wait.until(ExpectedConditions.invisibilityOf(element));
+	}
+
+	public static void logMsg(int type, String message){ //0=log, 1=pass, 2=fail
+		if (type==0){
+			ExtentManager.log(message);
+		} else if (type==1){
+			ExtentManager.pass(message);
+		}
+		else if (type==2){
+			ExtentManager.fail(message);
+		}else {
+			ExtentManager.log("Wrong value selected. 0=log, 1=pass, 2=fail");
+			ExtentManager.log(message);
+		}
+		System.out.println(message);
 	}
 	
 }
