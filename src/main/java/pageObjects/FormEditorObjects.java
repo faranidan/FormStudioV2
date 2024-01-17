@@ -65,7 +65,7 @@ public class FormEditorObjects extends BasePage {
 		act.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(label).perform();
 		fieldLabel.click();
 		act.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(label).perform();
-		ExtentManager.pass("Field added succesfully: " + label);
+		logMsg(1,"Field added succesfully: " + label);
 	}
 
 	public void renameFormTitle(String name) throws InterruptedException, IOException {
@@ -87,19 +87,19 @@ public class FormEditorObjects extends BasePage {
 		act.moveToElement(formsMenu).click(formsMenu).perform();
 		Thread.sleep(1200);
 		openForm.click();
-		ExtentManager.pass("Got to forms folder");
+		logMsg(1,"Got to forms folder");
 		waitForElement(searchForms, Duration.ofSeconds(6));
 		for (int i = 0; i < formList.size(); i++) {
 			String formName = formList.get(i).getText();
 			if (formName.contains(name)) {
 				act.scrollToElement(formList.get(i)).click(formList.get(i)).perform();
 				i = formList.size();
-				ExtentManager.pass("Listed all forms and selected the desired form to open");
+				logMsg(1,"Listed all forms and selected the desired form to open");
 			}
 		}
 		openFormBtn.click();
 		waitForInvisibility(openFormBtn, Duration.ofSeconds(6));
-		ExtentManager.pass("Opened desired form: " + name);
+		logMsg(1,"Opened desired form: " + name);
 		Thread.sleep(600);
 		if (prvw==true){
 			startPrvwTest();
@@ -107,17 +107,17 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void saveForm() throws InterruptedException, IOException {
-		ExtentManager.log("Starting saveForm method");
+		logMsg(0,"Starting saveForm method");
 		waitForElement(saveFormImg, Duration.ofSeconds(6));
 		saveFormImg.click();
-		ExtentManager.pass("Clicked main save button");
+		logMsg(1,"Clicked main save button");
 		Thread.sleep(600);
 		try {
 			saveBtnTest.click();
 			Thread.sleep(600);
-			ExtentManager.pass("Clicked save button notification");
+			logMsg(1,"Clicked save button notification");
 		} catch (Exception e) {
-			ExtentManager.pass("No 'Form name already exists' notification");
+			logMsg(1,"No 'Form name already exists' notification");
 		}
 	}
 
@@ -138,7 +138,7 @@ public class FormEditorObjects extends BasePage {
 		act.click(actionInputFld2).sendKeys(input2).sendKeys(Keys.ENTER).perform();
 		act.scrollToElement(actionSumFld).click(actionSumFld).sendKeys(sum, Keys.ENTER).perform();
 		act.scrollToElement(actionSaveBtn).click(actionSaveBtn).perform();
-		ExtentManager.pass("Created actions succesfully: " + name);
+		logMsg(1,"Created actions succesfully: " + name);
 	}
 
 	public void newSumActionISA() throws InterruptedException, IOException {
@@ -148,11 +148,11 @@ public class FormEditorObjects extends BasePage {
 		act.scrollToElement(listAPI).click(listAPI).perform();
 		selectAPI.click();
 		act.scrollToElement(sumAPI).click(sumAPI).perform();
-		ExtentManager.pass("Added a new SUM action inside the actions menu");
+		logMsg(1,"Added a new SUM action inside the actions menu");
 	}
 
 	public void switchTab() throws InterruptedException, IOException {
-		ExtentManager.log("Starting switchTab test...");
+		logMsg(0,"Starting switchTab test...");
 		Thread.sleep(3000);
 		String MainWindow = getDriver().getWindowHandle();
 		Set<String> handles = getDriver().getWindowHandles();
@@ -161,7 +161,7 @@ public class FormEditorObjects extends BasePage {
 			String child = iterate.next();
 			if (!MainWindow.equalsIgnoreCase(child)) {
 				getDriver().switchTo().window(child);
-				ExtentManager.pass("Switched succesfully to second tab");
+				logMsg(1,"Switched succesfully to second tab");
 			}
 		}
 	}
@@ -180,14 +180,14 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void previewSum(Integer var1, Integer var2) throws InterruptedException, IOException {
-		ExtentManager.log("Starting previewSum test...");
+		logMsg(0,"Starting previewSum test...");
 		prvwOneInput.sendKeys(var1.toString());
 		prvwTwoInput.sendKeys(var2.toString());
 		Thread.sleep(600);
 		act.moveToElement(prvwSumHdr).click().perform();
 		Thread.sleep(3600);
 		prvwThreeInput.click();
-		ExtentManager.pass("Sent selected values: " + var1.toString() + "+" + var2.toString());
+		logMsg(1,"Sent selected values: " + var1.toString() + "+" + var2.toString());
 		if (prvwThreeInputAfter.getAccessibleName().equals("three " + (var1 + var2))) {
 			logMsg(1,"Success! three = " + (var1 + var2));
 		} else {
@@ -206,20 +206,20 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void previewDone() throws InterruptedException, IOException {
-		ExtentManager.log("Starting previewDone test...");
+		logMsg(0,"Starting previewDone test...");
 		prvwDone.click();
 		waitForElement(formEndFicx, Duration.ofSeconds(9));
 		Assert.assertEquals(getDriver().getTitle(), "Thank You");
-		ExtentManager.pass("Got to 'Thank You' page, form ended successfully");
+		logMsg(1,"Got to 'Thank You' page, form ended successfully");
 	}
 
 	public void devTools(String url) throws InterruptedException, IOException {
-		ExtentManager.log("Starting devTools test...");
+		logMsg(0,"Starting devTools test...");
 		DevTools devTools = ((HasDevTools) getDriver()).getDevTools();
 		devTools.createSession();
 		devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
 		RequestId[] id = new RequestId[1];
-		ExtentManager.pass("Setup configurations for devTools done");
+		logMsg(1,"Setup configurations for devTools done");
 		devTools.addListener(Network.responseReceived(), response -> {
 			Response res = response.getResponse();
 			id[0] = response.getRequestId();
@@ -230,11 +230,11 @@ public class FormEditorObjects extends BasePage {
 				System.out.println("Response body: " + responseBody.toString());
 			}
 		});
-		ExtentManager.pass("Response of url " + url + " recorded to console logs");
+		logMsg(1,"Response of url " + url + " recorded to console logs");
 	}
 
 	public void dropdownFill1() throws InterruptedException, IOException {
-		ExtentManager.log("Starting dropdownFill1 test...");
+		logMsg(0,"Starting dropdownFill1 test...");
 		fatherDropdown.click();
 		Thread.sleep(600);
 		act.moveToElement(fddItem1).click(fddItem1).perform();
@@ -248,11 +248,11 @@ public class FormEditorObjects extends BasePage {
 		act.moveToElement(multiSelect1).click().perform();
 		ms1Item4.click();
 		ms1Item5.click();
-		ExtentManager.pass("Selected fields for fatherDropdown, dropdown1 & autocomplete1 successfully");
+		logMsg(1,"Selected fields for fatherDropdown, dropdown1 & autocomplete1 successfully");
 	}
 
 	public void dropdownFill2() throws InterruptedException, IOException {
-		ExtentManager.log("Starting dropdownFill2 test...");
+		logMsg(0,"Starting dropdownFill2 test...");
 		formHeader.click();
 		act.moveToElement(dropdown2).click(dropdown2).perform();
 		Thread.sleep(3600);
@@ -263,26 +263,24 @@ public class FormEditorObjects extends BasePage {
 		act.moveToElement(multiSelect2).click().perform();
 		ms2Item1.click();
 		ms2Item2.click();
-		ExtentManager.pass("Selected fields for dropdown2, autocomplete2 & multiSelect2 successfully");
+		logMsg(1,"Selected fields for dropdown2, autocomplete2 & multiSelect2 successfully");
 	}
 
 	public void dropdownSelectedFieldClear() throws InterruptedException {
-		ExtentManager.log("Starting dropdownSelectedFieldClear method...");
+		logMsg(0,"Starting dropdownSelectedFieldClear method...");
 		fddClear.click();
-		ExtentManager.pass("Cleared fatherDropdown");
+		logMsg(1,"Cleared fatherDropdown");
 		Thread.sleep(1800);
 		testEmptyDDownInput(dropdown1, "Please Select");
 		testEmptyDDownInput(autocomplete1, "Start typing...");
 		testEmptyDDownInput(ms1Selected, "Please Select");
-		/*  ** Feature downgraded, not in product req at the moment **
 		testEmptyDDownInput(dropdown2, "Please Select");
 		testEmptyDDownInput(autocomplete2, "Start typing...");
 		testEmptyDDownInput(ms2Selected, "Please Select");
-		*/
 	}
 
 	public void dropdownDataClear1() throws InterruptedException {
-		ExtentManager.log("Starting dropdownDataClear1 method...");
+		logMsg(0,"Starting dropdownDataClear1 method...");
 		autocomplete1.click();
 		Thread.sleep(300);
 		testDropdownClearing(ac1Item3);
@@ -297,9 +295,7 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void dropdownDataClear2() throws InterruptedException, IOException {
-		ExtentManager.log("Starting dropdownDataClear2 test...");
-		ExtentManager.log("** Feature downgraded, not in product req at the moment **");
-		/* 
+		logMsg(0,"Starting dropdownDataClear2 test...");
 		formHeader.click();
 		act.moveToElement(dropdown2).click(dropdown2).perform();
 		Thread.sleep(300);
@@ -310,135 +306,134 @@ public class FormEditorObjects extends BasePage {
 		formHeader.click();
 		act.moveToElement(multiSelect2).click().perform();
 		Thread.sleep(300);
-		testDropdownClearing(ms2Item3);
-		*/
+		testDropdownClearing(ms2Item2);
 		prvwDone.click();
 		testFormSubmitted();
 	}
 
 	public void testDropdownClearing(WebElement item) {
 		if (noDataAvl.isDisplayed()) {
-			ExtentManager.pass("Data tested has cleared successfully");
+			logMsg(1,"Data tested has cleared successfully");
 		} else if ((!noDataAvl.isDisplayed())) {
 			try {
 				if (item.getText().length() > 0) {
-					ExtentManager.fail(item.getText() + "- field data DID NOT clear");
+					logMsg(2,item.getText() + "- field data DID NOT clear");
 				} else {
-					ExtentManager.pass("Data tested has cleared successfully");
+					logMsg(1,"Data tested has cleared successfully");
 				}
 			} catch (NoSuchElementException e) {
-				ExtentManager.pass("Data tested has cleared successfully");
+				logMsg(1,"Data tested has cleared successfully");
 			}
 		} else {
-			ExtentManager.fail(item.getText() + "- field data DID NOT clear");
+			logMsg(2,item.getText() + "- field data DID NOT clear");
 		}
 	}
 
 	public void testEmptyDDownInput(WebElement item, String emptyMsg) {
 		try {
 			if (item.getAttribute("placeholder").contains(emptyMsg)){
-				ExtentManager.pass(item.getAttribute("aria-label") + " PASS - field cleared");
-				System.out.println(item.getAttribute("aria-label")+" placeholder: "+item.getAttribute("placeholder"));
+				logMsg(1, "Pass, filed cleared: "+
+					item.getAttribute("aria-label")+" placeholder: "+item.getAttribute("placeholder"));
 			} else {
-				ExtentManager.fail(item.getAttribute("aria-label")+" FAILED - field NOT cleared");
-				System.out.println(item.getAttribute("aria-label")+" placeholder: "+item.getAttribute("placeholder"));
+				logMsg(2, "Failed- field NOT cleared: "+
+				item.getAttribute("aria-label")+" placeholder: "+item.getAttribute("placeholder"));
 			}
 		} catch(NoSuchElementException e) {
-			ExtentManager.fail("  FAILED - Field NOT cleared");
+			logMsg(2,"FAILED - Field NOT cleared, NoSuchElementException");
 		}
 	}
 
 	public void previewUploadFiles1() throws InterruptedException, IOException {
-		ExtentManager.log("Starting Upload1 method");
+		logMsg(0,"Starting Upload1 method");
 		waitForElement(prvwFileUp1, Duration.ofSeconds(6));
 		prvwFileUp1.click();
 		Thread.sleep(600);
 		Runtime.getRuntime()
 				.exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload1.exe");
 		Thread.sleep(600);
-		ExtentManager.pass("Uploaded file1 successfully");
+		logMsg(1,"Uploaded file1 successfully");
 		try {
 			if (errorAlert.getText().contains("File can not be empty")) {
-				ExtentManager.pass("Upload1 test Passed. Empty file msg: " + errorAlert.getText());
+				logMsg(1,"Upload1 test Passed. Empty file msg: " + errorAlert.getText());
 			} else {
-				ExtentManager.fail("Upload1 test Failed: " + errorAlert.getText());
+				logMsg(2,"Upload1 test Failed: " + errorAlert.getText());
 			}
 		} catch (Exception e) {
-			ExtentManager.fail("Upload1 test Failed: No error message. Empty file uploaded successfully");
+			logMsg(2,"Upload1 test Failed: No error message. Empty file uploaded successfully");
 		}
 	}
 
 	public void previewUploadFiles2() throws IOException, InterruptedException {
-		ExtentManager.log("Starting Upload2 method");
+		logMsg(0,"Starting Upload2 method");
 		prvwFileUp2.click();
 		Thread.sleep(600);
 		Runtime.getRuntime()
 				.exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload2file1.exe");
-		ExtentManager.pass("Uploaded file1 successfully");
+		logMsg(1,"Uploaded file1 successfully");
 		Thread.sleep(600);
 		try {
 			if (uploadedFileName.getText().contains("Form")) {
-				ExtentManager.pass("Upload2 file1 Passed. Uploaded file: " + uploadedFileName.getText());
+				logMsg(1,"Upload2 file1 Passed. Uploaded file: " + uploadedFileName.getText());
 			} else {
-				ExtentManager.fail("Upload2 file1 Failed: " + uploadedFileName.getText());
+				logMsg(2,"Upload2 file1 Failed: " + uploadedFileName.getText());
 			}
 		} catch (Exception e) {
-			ExtentManager.fail("Upload2 file1 failed. No uploaded file text");
+			logMsg(2,"Upload2 file1 failed. No uploaded file text");
 		}
 		prvwFileUp2.click();
 		Thread.sleep(600);
 		Runtime.getRuntime()
 				.exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload2file2.exe");
 		Thread.sleep(600);
-		ExtentManager.pass("Uploaded file2 successfully");
+		logMsg(1,"Uploaded file2 successfully");
 		try {
 			if (errorAlert.getText().contains("You tried to upload file(s) with forbidden extension(s)")) {
-				ExtentManager.pass("Upload2 file2 test Passed. Error msg: " + errorAlert.getText());
+				logMsg(1,"Upload2 file2 test Passed. Error msg: " + errorAlert.getText());
 			} else {
-				ExtentManager.fail("Upload2 file2 test Failed: " + errorAlert.getText());
+				logMsg(2,"Upload2 file2 test Failed: " + errorAlert.getText());
 			}
 		} catch (Exception e) {
-			ExtentManager.fail("Upload2 file2 test Failed. No error message. File uploaded successfully");
+			logMsg(2,"Upload2 file2 test Failed. No error message. File uploaded successfully");
 		}
 
 	}
 
 	public void previewUploadFiles3() throws IOException, InterruptedException {
-		ExtentManager.log("Starting Upload3 method");
+		logMsg(0,"Starting Upload3 method");
 		prvwFileUp3.click();
 		Thread.sleep(600);
 		Runtime.getRuntime()
 				.exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload3file1.exe");
-		ExtentManager.pass("Uploaded file1 successfully");
+		logMsg(1,"Uploaded file1 successfully");
 		Thread.sleep(600);
 		try {
 			if (uploadedFileName2.getText().contains("Regression")) {
-				ExtentManager.pass("Upload3 file1 Passed. Uploaded file: " + uploadedFileName2.getText());
+				logMsg(1,"Upload3 file1 Passed. Uploaded file: " + uploadedFileName2.getText());
 			} else {
-				ExtentManager.fail("Upload3 file1 test Failed: " + uploadedFileName2.getText());
+				logMsg(2,"Upload3 file1 test Failed: " + uploadedFileName2.getText());
 			}
 		} catch (Exception e) {
-			ExtentManager.fail("Upload3 file1 test Failed. No uploaded file text");
+			logMsg(2,"Upload3 file1 test Failed. No uploaded file text");
 		}
 		prvwFileUp3.click();
 		Thread.sleep(600);
 		Runtime.getRuntime()
 				.exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload3file2.exe");
-		ExtentManager.pass("Uploaded file2 successfully");
+		logMsg(1,"Uploaded file2 successfully");
 		Thread.sleep(600);
 		try {
 			if (errorAlert2.getText().contains("The file you are trying to upload is larger")) {
-				ExtentManager.pass("Upload3 file2 test Passed. Error msg: " + errorAlert2.getText());
+				logMsg(1,"Upload3 file2 test Passed. Error msg: " + errorAlert2.getText());
 			} else {
-				ExtentManager.pass("Upload3 file2 test Failed: " + errorAlert2.getText());
+				logMsg(1,"Upload3 file2 test Failed: " + errorAlert2.getText());
 			}
 		} catch (Exception e) {
-			ExtentManager.pass("Upload3 file2 test failed. No error message. File uploaded successfully");
+			logMsg(1,"Upload3 file2 test failed. No error message. File uploaded successfully");
 		}
 	}
 
 	public void addNewRule(String enterRuleName, String enterRuleCode) throws InterruptedException, IOException {
-		ExtentManager.log("Starting editRules method");
+		logMsg(0,"Starting editRules method");
 		if (!ruleName.isDisplayed()) {
 			settingsImg.click();
 			advancedMenu.click();
@@ -450,7 +445,7 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		try {
 			xError.isDisplayed();
-			ExtentManager.log("Rule name already exists");
+			logMsg(0,"Rule name already exists");
 			for (int i = 0; i < savedRulesList.size(); i++) {
 				String name = savedRulesList.get(i).getText();
 				System.out.println("rules names: " + name);
@@ -464,39 +459,39 @@ public class FormEditorObjects extends BasePage {
 			}
 			act.click(ruleName).sendKeys(enterRuleName).perform();
 		} catch (NoSuchElementException e) {
-			ExtentManager.pass("new rule is being made");
+			logMsg(1,"new rule is being made");
 		}
 		act.click(rulesCode).sendKeys(enterRuleCode).perform();
 		act.scrollToElement(ruleSelectField).click(ruleSelectField).perform();
-		ExtentManager.pass("Added a new rule Name & Code");
+		logMsg(1,"Added a new rule Name & Code");
 	}
 
 	public void ruleOutcome(WebElement field, WebElement fieldStatus) throws InterruptedException, IOException {
-		ExtentManager.log("Starting ruleOutcome method");
+		logMsg(0,"Starting ruleOutcome method");
 		waitForElement(field, Duration.ofSeconds(3));
 		act.scrollToElement(field).click(field).perform();
 		ruleSelectFieldStatus.click();
 		waitForElement(fieldStatus, Duration.ofSeconds(3));
 		fieldStatus.click();
-		ExtentManager.pass("Selected a field & outcome for rule");
+		logMsg(1,"Selected a field & outcome for rule");
 		act.moveToElement(ruleSaveBtn).click().perform();
-		ExtentManager.pass("Saved rule");
+		logMsg(1,"Saved rule");
 	}
 
 	public void addOutcome(WebElement fieldStatus) throws InterruptedException, IOException {
-		ExtentManager.log("Starting addOutcome method");
+		logMsg(0,"Starting addOutcome method");
 		newOutcomeBtn.click();
-		ExtentManager.pass("Added New Outcome to the rule");
+		logMsg(1,"Added New Outcome to the rule");
 		act.moveToElement(nextFieldStatus).click().perform();
 		fieldStatus.click();
-		ExtentManager.pass("Selected status to next field in line [auto selected next field]");
+		logMsg(1,"Selected status to next field in line [auto selected next field]");
 		ruleUpdateSave.click();
 		Thread.sleep(600);
-		ExtentManager.pass("Updated saved rule");
+		logMsg(1,"Updated saved rule");
 	}
 
 	public void addRuleByBlock(WebElement block, WebElement blockStatus) throws InterruptedException, IOException {
-		ExtentManager.log("Starting addRuleByBlock method");
+		logMsg(0,"Starting addRuleByBlock method");
 		waitForElement(ruleByFieldDD, Duration.ofSeconds(9));
 		ruleByFieldDD.click();
 		byBlockDD.click();
@@ -505,11 +500,11 @@ public class FormEditorObjects extends BasePage {
 		act.moveToElement(selectBlockStatus).click().perform();
 		blockStatus.click();
 		act.scrollToElement(ruleSaveBtn).click(ruleSaveBtn).perform();
-		ExtentManager.pass("Rule by block added & saved");
+		logMsg(1,"Rule by block added & saved");
 	}
 
 	public void prvwRulesStep1() throws InterruptedException, IOException {
-		ExtentManager.log("Starting prvwRulesStep1 method...");
+		logMsg(0,"Starting prvwRulesStep1 method...");
 		waitForElement(chkbxPrvw, Duration.ofSeconds(3));
 		testRulesDisabled(chkbxPrvw);
 		testRulesDisabled(radio2Prvw);
@@ -522,7 +517,7 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void prvwRulesStep2() throws InterruptedException, IOException {
-		ExtentManager.log("Starting prvwRulesStep2 method...");
+		logMsg(0,"Starting prvwRulesStep2 method...");
 		waitForElement(nmbPrvw, Duration.ofSeconds(3));
 		nmbPrvw.sendKeys("3");
 		block1HdrPrvw.click();
@@ -537,7 +532,7 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void prvwRulesStep3() throws InterruptedException, IOException {
-		ExtentManager.log("Starting prvwRulesStep3 method...");
+		logMsg(0,"Starting prvwRulesStep3 method...");
 		datePrvw.sendKeys("01");
 		block2HdrPrvw.click();
 		testErrorMsg("Date field");
@@ -551,7 +546,7 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void prvwRulesStep4() throws InterruptedException, IOException {
-		ExtentManager.log("Starting prvwRulesStep4 method...");
+		logMsg(0,"Starting prvwRulesStep4 method...");
 		passAfterPrvw.sendKeys(Keys.BACK_SPACE);
 		block1HdrPrvw.click();
 		Thread.sleep(600);
@@ -565,10 +560,10 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		try{
 			if (phnPrvw.getAttribute("aria-label").equals("phn ")) {
-				ExtentManager.pass("Passed: Hide & Clear rule cleared phn Field");
+				logMsg(1,"Passed: Hide & Clear rule cleared phn Field");
 			} 
 		} catch (Exception NoSuchElementException) {
-			ExtentManager.fail("Failed: Hide & Clear rule DID NOT clear phn Field");
+			logMsg(2,"Failed: Hide & Clear rule DID NOT clear phn Field");
 		}
 	}
 
@@ -576,9 +571,9 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		try {
 			field.click();
-			ExtentManager.fail(field.getText() + " - Rule Failed: clicked [field not disabled/hidden]");
+			logMsg(2,field.getText() + " - Rule Failed: clicked [field not disabled/hidden]");
 		} catch (Exception e) {
-			ExtentManager.pass("Rule Passed: could not click [field disabled/hidden]");
+			logMsg(1,"Rule Passed: could not click [field disabled/hidden]");
 		}
 	}
 
@@ -586,9 +581,9 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		try {
 			field.click();
-			ExtentManager.pass(field.getText() + " - Rule Passed: clicked [field not disabled/hidden]");
+			logMsg(1,field.getText() + " - Rule Passed: clicked [field not disabled/hidden]");
 		} catch (Exception e) {
-			ExtentManager.fail("Rule Failed: could not click [field disabled/hidden]");
+			logMsg(2,"Rule Failed: could not click [field disabled/hidden]");
 		}
 	}
 
@@ -602,37 +597,37 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void editStep(WebElement step, String nextStepName, String backStepName, boolean add) {
-		ExtentManager.log("Starting editStep method");
+		logMsg(0,"Starting editStep method");
 		step.click();
 		nextStep.click();
 		nextStepText.sendKeys(nextStepName);
-		ExtentManager.pass("Added next step name");
+		logMsg(1,"Added next step name");
 		if (step != step1) {
 			backStep.click();
 			backStepText.sendKeys(backStepName);
-			ExtentManager.pass("Added back step name");
+			logMsg(1,"Added back step name");
 		}
 		if (add == true) {
 			addStep.click();
-			ExtentManager.pass("Added a new step");
+			logMsg(1,"Added a new step");
 		}
 	}
 
 	public void testStepName(WebElement step, String stepName) {
-		ExtentManager.log("Starting testStepName method");
+		logMsg(0,"Starting testStepName method");
 		if (step.getText().contains(stepName)) {
-			ExtentManager.pass("Validation success! next btn is: " + step.getText());
+			logMsg(1,"Validation success! next btn is: " + step.getText());
 		} else {
-			ExtentManager.fail("failed next validation :" + step.getText());
+			logMsg(2,"failed next validation :" + step.getText());
 		}
 	}
 
 	public void testLastStepName(String stepName) {
-		ExtentManager.log("Starting testLastStepName method");
+		logMsg(0,"Starting testLastStepName method");
 		if (doneStepBtnPrvw.getText().contains(stepName)) {
-			ExtentManager.pass("Validation success! next btn is: " + doneStepBtnPrvw.getText());
+			logMsg(1,"Validation success! next btn is: " + doneStepBtnPrvw.getText());
 		} else {
-			ExtentManager.fail("failed next validation :" + doneStepBtnPrvw.getText());
+			logMsg(2,"failed next validation :" + doneStepBtnPrvw.getText());
 		}
 	}
 
@@ -653,13 +648,13 @@ public class FormEditorObjects extends BasePage {
 		reqStep3Prvw.sendKeys("a");
 		testBtnReqMsg(btn3PrvwBtns, "btn3 rule: Required");
 		hideBlkVerPrvw.sendKeys("1");
-		ExtentManager.pass("Passed: Rules Required & Hide to buttons");
+		logMsg(1,"Passed: Rules Required & Hide to buttons");
 		Thread.sleep(660);
 		btn1PrvwBtns.click();
 		backStepBtnPrvw.click();
 		btn2PrvwBtns.click();
 		testFormSubmitted();
-		ExtentManager.pass("Passed: Step[Finish Form] submitted form");
+		logMsg(1,"Passed: Step[Finish Form] submitted form");
 		changeTab(1, true);
 		logMsg(1,"Ended method testBtns1 successfully.");
 	}
@@ -670,7 +665,7 @@ public class FormEditorObjects extends BasePage {
 		act.moveToElement(phoneNumberPrvw).click().sendKeys("1").perform();
 		btn4PrvwBtns.click();
 		testFormSubmitted();
-		ExtentManager.pass("Passed: Step[Finish Form] submitted form");
+		logMsg(1,"Passed: Step[Finish Form] submitted form");
 		changeTab(1, true);
 		logMsg(1,"Ended method testBtns2 successfully.");
 		}
@@ -683,7 +678,7 @@ public class FormEditorObjects extends BasePage {
 		testBtnReqMsg(btn5PrvwBtns, "btn5");
 		testBtnReqMsg(btn7PrvwBtns, "btn7");
 		testBtnReqMsg(btn8PrvwBtns, "btn8");
-		ExtentManager.pass("Passed: All required Buttons with URL[newTab] require validation");
+		logMsg(1,"Passed: All required Buttons with URL[newTab] require validation");
 		String GUID = getGuid();
 		Thread.sleep(1200);
 		btn6PrvwBtns.click();
@@ -695,7 +690,7 @@ public class FormEditorObjects extends BasePage {
 		testUrlParams(GUID, true);
 		changeTab(1, true);
 		System.out.println("Ended method testBtns3 successfully.");
-		ExtentManager.log("Ended method testBtns3 successfully.");
+		logMsg(0,"Ended method testBtns3 successfully.");
 	}
 
 	public void testBtns4() throws IOException, InterruptedException {
@@ -709,7 +704,7 @@ public class FormEditorObjects extends BasePage {
 		testBtnReqMsg(btn10PrvwBtns, "btn10");
 		testBtnReqMsg(btn11PrvwBtns, "btn11");
 		testBtnReqMsg(btn11PrvwBtns, "btn12");
-		ExtentManager.pass("Passed: All type of Buttons with URL[sameTab] require validation");
+		logMsg(1,"Passed: All type of Buttons with URL[sameTab] require validation");
 		CheckboxBtnsPrvw.click();
 		String GUID = getGuid();
 		btn9PrvwBtns.click();
@@ -722,11 +717,11 @@ public class FormEditorObjects extends BasePage {
 		btn11PrvwBtns.click();
 		testUrlParams(GUID2, false);
 		System.out.println("Ended method testBtns4 successfully.");
-		ExtentManager.log("Ended method testBtns4 successfully.");
+		logMsg(0,"Ended method testBtns4 successfully.");
 	}
 
 	public void testBtns5() throws InterruptedException, IOException {
-		ExtentManager.log("Started method testBtns5: btns rules: testing all rules & required validations");
+		logMsg(0,"Started method testBtns5: btns rules: testing all rules & required validations");
 		System.out.println("Started method testBtns5: btns rules: testing all rules & required validations");
 		startPrvwTest();
 		step4Btn.click();
@@ -735,7 +730,7 @@ public class FormEditorObjects extends BasePage {
 		testRulesEnabled(btn14PrvwBtns);
 		testRulesDisabled(btn15PrvwBtns);
 		testRequiredBtnRule(btn16PrvwBtns, false);
-		ExtentManager.pass("Passed: All rules are inactive prior to activation");
+		logMsg(1,"Passed: All rules are inactive prior to activation");
 		activateRuleBtnPrvw.sendKeys("1");
 		testRulesDisabled(btn13PrvwBtns);
 		testRulesDisabled(btn14PrvwBtns);
@@ -744,9 +739,9 @@ public class FormEditorObjects extends BasePage {
 		step4St1.sendKeys("1");
 		act.moveToElement(finishPrvw).click().perform();
 		testFormSubmitted();
-		ExtentManager.pass("Passed: All rules are active after activation");
+		logMsg(1,"Passed: All rules are active after activation");
 		System.out.println("Ended method testBtns5 successfully.");
-		ExtentManager.log("Ended method testBtns5 successfully.");
+		logMsg(0,"Ended method testBtns5 successfully.");
 	}
 
 	public void testRequiredBtnRule(WebElement button, boolean shouldBeReq) throws InterruptedException {
@@ -833,7 +828,7 @@ public class FormEditorObjects extends BasePage {
 	public String getGuid() throws InterruptedException, IOException {
 		String FormUrl = getDriver().getCurrentUrl();
 		String[] Split = FormUrl.split("d=");
-		ExtentManager.pass("Got form GUID");
+		logMsg(1,"Got form GUID");
 		return Split[1];
 	}
 
