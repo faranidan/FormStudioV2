@@ -1,3 +1,10 @@
+Version: 1.40 ~~ 24.3.24
+Whats new??
+    * Made changes only to fix Fails of auto tests:
+    * Changed forms Finish button according to the new feature (change text in General menu)
+    * Changed testDropdownClearing() to add new text of Dropdown empty field when cleared: 
+        "No data available - Please refresh your browser"
+
 Version: 1.36 ~~ 25.12.23, 17:00
 Whats new??
     * Opened the dropdownSelectedFieldClear + dropdownDataClear2 methods test for "grandson" fields - 

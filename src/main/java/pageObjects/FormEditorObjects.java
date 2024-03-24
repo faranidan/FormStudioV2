@@ -3,10 +3,8 @@ package pageObjects;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -151,20 +149,20 @@ public class FormEditorObjects extends BasePage {
 		logMsg(1,"Added a new SUM action inside the actions menu");
 	}
 
-	public void switchTab() throws InterruptedException, IOException {
-		logMsg(0,"Starting switchTab test...");
-		Thread.sleep(3000);
-		String MainWindow = getDriver().getWindowHandle();
-		Set<String> handles = getDriver().getWindowHandles();
-		Iterator<String> iterate = handles.iterator();
-		while (iterate.hasNext()) {
-			String child = iterate.next();
-			if (!MainWindow.equalsIgnoreCase(child)) {
-				getDriver().switchTo().window(child);
-				logMsg(1,"Switched succesfully to second tab");
-			}
-		}
-	}
+	// public void switchTab() throws InterruptedException, IOException {
+	// 	logMsg(0,"Starting switchTab test...");
+	// 	Thread.sleep(3000);
+	// 	String MainWindow = getDriver().getWindowHandle();
+	// 	Set<String> handles = getDriver().getWindowHandles();
+	// 	Iterator<String> iterate = handles.iterator();
+	// 	while (iterate.hasNext()) {
+	// 		String child = iterate.next();
+	// 		if (!MainWindow.equalsIgnoreCase(child)) {
+	// 			getDriver().switchTo().window(child);
+	// 			logMsg(1,"Switched succesfully to second tab");
+	// 		}
+	// 	}
+	// }
 
 	public void changeTab(Integer tabNmbr, Boolean close) throws InterruptedException, IOException {
 		Thread.sleep(1200);
@@ -312,7 +310,7 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void testDropdownClearing(WebElement item) {
-		if (noDataAvl.isDisplayed()) {
+		if (noDataAvl.isDisplayed() || noDataDropdown.isDisplayed()) {
 			logMsg(1,"Data tested has cleared successfully");
 		} else if ((!noDataAvl.isDisplayed())) {
 			try {
@@ -907,6 +905,7 @@ public class FormEditorObjects extends BasePage {
 	// preview rules
 	@FindBy(css = "h2[aria-label='Block1']") public WebElement block1HdrPrvw;
 	@FindBy(xpath = "(//div[@class='v-list__tile__title'][normalize-space()='No data available'])") public WebElement noDataAvl;
+	@FindBy(xpath = "//div[normalize-space()='No data available - Please refresh your browser']") public WebElement noDataDropdown;
 	@FindBy(css = "input[aria-label='time 12']") public WebElement timePrvwAfterChange;
 	@FindBy(css = "h2[aria-label='Block2']") public WebElement block2HdrPrvw;
 	@FindBy(xpath = "//span[normalize-space()='Back']") public WebElement backBtnPrvw;
